@@ -1,0 +1,1420 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>ИЗОБОНД — прототип нового сайта</title>
+<meta name="description" content="Прототип нового сайта производителя изоляционных материалов ИЗОБОНД.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%237C1D2B'/%3E%3Cpath d='M16 7l6 9-6 9-6-9z' fill='white'/%3E%3C/svg%3E">
+<style>*{margin:0;padding:0;box-sizing:border-box}</style>
+</head>
+<body>
+<style>
+  :root{
+    --bg:#ffffff; --surface:#f6f4f2; --surface-2:#efeae7; --card:#ffffff;
+    --ink:#1b1719; --ink-soft:#5c5457; --ink-faint:#8c8386;
+    --line:#e5dedb; --line-strong:#d5cbc7;
+    --burg:#7c1d2b; --burg-deep:#5c1420; --burg-bright:#98253a; --burg-tint:#f4e9eb;
+    --ok:#2f7d4f; --warn:#b5761b;
+    --shadow:0 1px 2px rgba(27,23,25,.04),0 12px 32px -12px rgba(27,23,25,.14);
+    --shadow-sm:0 1px 2px rgba(27,23,25,.05),0 4px 12px -6px rgba(27,23,25,.1);
+    --sans:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono:ui-monospace,"Cascadia Code","Segoe UI Mono","SF Mono",Consolas,"Liberation Mono",monospace;
+    --r:4px; --r-lg:8px; --maxw:1180px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#161113; --surface:#1e181a; --surface-2:#261e21; --card:#1e181a;
+      --ink:#f2ecea; --ink-soft:#b8abae; --ink-faint:#877b7e;
+      --line:#342a2d; --line-strong:#443639;
+      --burg:#cf5568; --burg-deep:#b23c50; --burg-bright:#e06a7c; --burg-tint:#2a1a1f;
+      --ok:#5fb082; --warn:#d69a4a;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 14px 40px -14px rgba(0,0,0,.6);
+      --shadow-sm:0 1px 2px rgba(0,0,0,.3),0 6px 16px -8px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#ffffff; --surface:#f6f4f2; --surface-2:#efeae7; --card:#ffffff;
+    --ink:#1b1719; --ink-soft:#5c5457; --ink-faint:#8c8386;
+    --line:#e5dedb; --line-strong:#d5cbc7;
+    --burg:#7c1d2b; --burg-deep:#5c1420; --burg-bright:#98253a; --burg-tint:#f4e9eb;
+    --ok:#2f7d4f; --warn:#b5761b;
+    --shadow:0 1px 2px rgba(27,23,25,.04),0 12px 32px -12px rgba(27,23,25,.14);
+    --shadow-sm:0 1px 2px rgba(27,23,25,.05),0 4px 12px -6px rgba(27,23,25,.1);
+  }
+  :root[data-theme="dark"]{
+    --bg:#161113; --surface:#1e181a; --surface-2:#261e21; --card:#1e181a;
+    --ink:#f2ecea; --ink-soft:#b8abae; --ink-faint:#877b7e;
+    --line:#342a2d; --line-strong:#443639;
+    --burg:#cf5568; --burg-deep:#b23c50; --burg-bright:#e06a7c; --burg-tint:#2a1a1f;
+    --ok:#5fb082; --warn:#d69a4a;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 14px 40px -14px rgba(0,0,0,.6);
+    --shadow-sm:0 1px 2px rgba(0,0,0,.3),0 6px 16px -8px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,h4{margin:0;text-wrap:balance;line-height:1.1;letter-spacing:-.02em;font-weight:750}
+  p{margin:0}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--burg);font-weight:600}
+  .mono{font-family:var(--mono)}
+  .tnum{font-variant-numeric:tabular-nums}
+  .muted{color:var(--ink-soft)}
+
+  /* buttons */
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:15px;font-weight:650;padding:12px 20px;border-radius:var(--r);border:1px solid transparent;cursor:pointer;transition:transform .12s ease,background .15s ease,border-color .15s ease;line-height:1}
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{background:var(--burg);color:#fff;border-color:var(--burg)}
+  .btn-primary:hover{background:var(--burg-bright)}
+  :root[data-theme="dark"] .btn-primary,[data-theme="dark"] .btn-primary{color:#160d10}
+  @media (prefers-color-scheme:dark){.btn-primary{color:#160d10}}
+  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line-strong)}
+  .btn-ghost:hover{border-color:var(--burg);color:var(--burg)}
+  .btn-sm{padding:9px 14px;font-size:13.5px}
+  .btn:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--burg);outline-offset:2px}
+
+  /* top strip */
+  .strip{background:var(--ink);color:#e8e0e2;font-size:13px}
+  @media (prefers-color-scheme:dark){.strip{background:#0e0a0c}}
+  :root[data-theme="dark"] .strip{background:#0e0a0c}
+  .strip .wrap{display:flex;align-items:center;justify-content:space-between;height:38px;gap:16px}
+  .strip .feats{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+  .strip .feats span{display:inline-flex;gap:7px;align-items:center;color:#cdbfc3;font-family:var(--mono);font-size:11.5px;letter-spacing:.03em}
+  .strip .feats b{color:var(--burg-bright);font-weight:700}
+  .strip .msgs{display:flex;gap:10px;align-items:center}
+  .strip .msgs a{width:26px;height:26px;display:grid;place-items:center;border:1px solid #4a3d41;border-radius:50%;color:#cdbfc3;font-size:12px;transition:.15s}
+  .strip .msgs a:hover{border-color:var(--burg-bright);color:#fff}
+
+  /* header */
+  header.nav{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+  .nav .wrap{display:flex;align-items:center;gap:24px;height:66px}
+  .logo{display:flex;flex-direction:column;line-height:1;gap:3px}
+  .logo .mark{font-weight:800;font-size:22px;letter-spacing:.02em}
+  .logo .mark b{color:var(--burg)}
+  .logo .sub{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint)}
+  nav.menu{display:flex;gap:22px;margin-left:8px}
+  nav.menu a{font-size:14.5px;font-weight:550;color:var(--ink-soft);padding:6px 0;position:relative}
+  nav.menu a:hover{color:var(--ink)}
+  nav.menu a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:2px;background:var(--burg);transition:right .2s ease}
+  nav.menu a:hover::after{right:0}
+  .nav .right{margin-left:auto;display:flex;align-items:center;gap:12px}
+  .phone{font-family:var(--mono);font-weight:650;font-size:15px;white-space:nowrap}
+  .phone small{display:block;font-size:10px;color:var(--ink-faint);letter-spacing:.04em;font-weight:500}
+  .theme-tgl{width:38px;height:38px;border:1px solid var(--line-strong);background:transparent;border-radius:var(--r);cursor:pointer;color:var(--ink);display:grid;place-items:center;font-size:15px}
+  .theme-tgl:hover{border-color:var(--burg)}
+  .burger{display:none;width:40px;height:40px;border:1px solid var(--line-strong);background:transparent;border-radius:var(--r);cursor:pointer;color:var(--ink);font-size:18px}
+
+  /* section scaffold */
+  section{padding:76px 0;border-bottom:1px solid var(--line)}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:36px}
+  .sec-head h2{font-size:clamp(26px,3.4vw,40px)}
+  .sec-head p{color:var(--ink-soft);max-width:52ch;margin-top:10px}
+  .sec-head .idx{font-family:var(--mono);font-size:12px;color:var(--ink-faint);letter-spacing:.1em}
+
+  /* hero */
+  .hero{padding:64px 0 72px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+  .hero .grid{display:grid;grid-template-columns:1.12fr .88fr;gap:52px;align-items:center}
+  .hero h1{font-size:clamp(34px,5vw,60px);font-weight:800;letter-spacing:-.03em}
+  .hero h1 .hl{color:var(--burg);position:relative;white-space:nowrap}
+  .hero .lead{font-size:18.5px;color:var(--ink-soft);margin-top:22px;max-width:46ch}
+  .hero .cta{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
+  .hero .chips{display:flex;gap:10px;margin-top:34px;flex-wrap:wrap}
+  .chip{font-family:var(--mono);font-size:12px;color:var(--ink-soft);border:1px solid var(--line-strong);border-radius:100px;padding:7px 13px;display:inline-flex;gap:7px;align-items:center;background:var(--card)}
+  .chip b{color:var(--ink);font-weight:700}
+  .chip .dot{width:6px;height:6px;border-radius:50%;background:var(--burg)}
+
+  /* datasheet card (hero visual) */
+  .sheet{background:var(--card);border:1px solid var(--line-strong);border-radius:var(--r-lg);box-shadow:var(--shadow);position:relative}
+  .sheet::before,.sheet::after{content:"";position:absolute;width:12px;height:12px;border:2px solid var(--burg);opacity:.7}
+  .sheet::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+  .sheet::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+  .sheet .top{padding:18px 22px;border-bottom:1px dashed var(--line-strong);display:flex;justify-content:space-between;align-items:center}
+  .sheet .top .code{font-family:var(--mono);font-size:12px;color:var(--burg);letter-spacing:.08em}
+  .sheet .top .name{font-weight:750;font-size:17px}
+  .sheet .viz{height:150px;background:
+      repeating-linear-gradient(90deg,transparent 0 46px,color-mix(in srgb,var(--burg) 30%,transparent) 46px 48px),
+      repeating-linear-gradient(0deg,var(--surface-2) 0 22px,var(--surface) 22px 24px);
+    position:relative;border-bottom:1px dashed var(--line-strong)}
+  .sheet .viz .tag{position:absolute;left:50%;top:12px;transform:translateX(-50%);font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--burg);background:var(--card);padding:3px 9px;border:1px solid var(--burg);border-radius:100px}
+  .sheet .viz .measure{position:absolute;left:16px;right:16px;bottom:14px;height:1px;background:var(--burg);opacity:.55}
+  .sheet .viz .measure::before,.sheet .viz .measure::after{content:"";position:absolute;top:-4px;width:1px;height:9px;background:var(--burg)}
+  .sheet .viz .measure::before{left:0}.sheet .viz .measure::after{right:0}
+  .sheet .viz .mlabel{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);font-family:var(--mono);font-size:10px;color:var(--burg);background:var(--card);padding:1px 7px}
+  .specs{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .specs .row{display:flex;justify-content:space-between;gap:12px;padding:12px 22px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);font-size:13px}
+  .specs .row:nth-child(2n){border-right:0}
+  .specs .row .k{color:var(--ink-faint);font-size:12px}
+  .specs .row .v{font-family:var(--mono);font-weight:650;color:var(--ink)}
+  .sheet .foot{padding:14px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .badge-ok{font-family:var(--mono);font-size:11px;color:var(--ok);border:1px solid color-mix(in srgb,var(--ok) 45%,var(--line));padding:4px 9px;border-radius:100px;display:inline-flex;gap:6px;align-items:center}
+
+  /* generic grid */
+  .cols-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .cols-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;transition:border-color .15s,transform .15s,box-shadow .15s}
+  .card:hover{border-color:var(--line-strong);box-shadow:var(--shadow-sm)}
+
+  /* selector */
+  .selector{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;display:grid;grid-template-columns:270px 1fr;gap:26px}
+  .nodes{display:flex;flex-direction:column;gap:8px}
+  .node{display:flex;gap:12px;align-items:center;text-align:left;padding:13px 15px;border:1px solid var(--line);background:var(--card);border-radius:var(--r);cursor:pointer;font-size:15px;font-weight:600;color:var(--ink);transition:.13s}
+  .node .ic{font-size:18px;width:24px;text-align:center}
+  .node:hover{border-color:var(--burg)}
+  .node[aria-selected="true"]{border-color:var(--burg);background:var(--burg-tint);color:var(--burg)}
+  .node .arw{margin-left:auto;opacity:0;transition:.13s;color:var(--burg)}
+  .node[aria-selected="true"] .arw{opacity:1}
+  .result{background:var(--card);border:1px solid var(--line-strong);border-radius:var(--r);padding:24px;min-height:280px}
+  .result .rtag{font-family:var(--mono);font-size:11.5px;color:var(--burg);letter-spacing:.1em;text-transform:uppercase}
+  .result h3{font-size:24px;margin:8px 0 4px}
+  .result .why{color:var(--ink-soft);margin:14px 0 18px;max-width:56ch}
+  .result .rspecs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+  .pill{font-family:var(--mono);font-size:12px;border:1px solid var(--line-strong);border-radius:100px;padding:6px 12px;background:var(--surface)}
+  .pill b{color:var(--burg)}
+
+  /* why grid */
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+  .why-cell{background:var(--card);padding:26px 24px;transition:background .15s}
+  .why-cell:hover{background:var(--surface)}
+  .why-cell .n{font-family:var(--mono);font-size:12px;color:var(--burg);letter-spacing:.1em}
+  .why-cell h4{font-size:18px;margin:14px 0 9px}
+  .why-cell p{font-size:14px;color:var(--ink-soft)}
+
+  /* flagship */
+  .flag{display:grid;grid-template-columns:.95fr 1.05fr;gap:40px;align-items:center}
+  .flag .kicker{display:inline-flex;gap:8px;align-items:center;font-family:var(--mono);font-size:12px;color:var(--burg);border:1px solid var(--burg);border-radius:100px;padding:6px 12px;text-transform:uppercase;letter-spacing:.08em}
+  .flag h2{font-size:clamp(26px,3.4vw,38px);margin:18px 0 14px}
+  .flag ul{list-style:none;padding:0;margin:20px 0 26px;display:flex;flex-direction:column;gap:12px}
+  .flag li{display:flex;gap:12px;font-size:15.5px}
+  .flag li .ck{color:var(--burg);font-weight:800}
+
+  /* calculator */
+  .calc{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line-strong);border-radius:var(--r-lg);overflow:hidden;background:var(--card)}
+  .calc .inp{padding:30px;border-right:1px solid var(--line)}
+  .calc .out{padding:30px;background:var(--surface)}
+  .field{margin-bottom:18px}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:7px;color:var(--ink-soft)}
+  .field select,.field input{width:100%;padding:12px 14px;border:1px solid var(--line-strong);border-radius:var(--r);background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px}
+  .calc .readout{text-align:center;padding:14px 0}
+  .calc .readout .big{font-family:var(--mono);font-size:52px;font-weight:700;color:var(--burg);line-height:1}
+  .calc .readout .u{font-family:var(--mono);font-size:14px;color:var(--ink-soft);margin-top:6px}
+  .calc .breakdown{border-top:1px dashed var(--line-strong);margin-top:16px;padding-top:16px;display:flex;flex-direction:column;gap:9px}
+  .calc .breakdown .r{display:flex;justify-content:space-between;font-size:13.5px}
+  .calc .breakdown .r .v{font-family:var(--mono);font-weight:650}
+
+  /* dealer */
+  .dealer{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+  .dealer .offer{display:flex;flex-direction:column;gap:14px}
+  .offer-item{display:flex;gap:14px;padding:16px;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
+  .offer-item .ic{font-size:20px;color:var(--burg)}
+  .offer-item h4{font-size:16px;margin-bottom:4px}
+  .offer-item p{font-size:13.5px;color:var(--ink-soft)}
+  form.lead{background:var(--card);border:1px solid var(--line-strong);border-radius:var(--r-lg);padding:28px;box-shadow:var(--shadow-sm)}
+  form.lead h3{font-size:22px;margin-bottom:6px}
+  form.lead .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .consent{font-size:12px;color:var(--ink-faint);margin-top:14px}
+
+  /* where to buy */
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+  .tab{padding:10px 18px;border:1px solid var(--line-strong);background:var(--card);border-radius:100px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink-soft)}
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  .tabpane{display:none}
+  .tabpane.on{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .mapph{height:260px;border:1px solid var(--line-strong);border-radius:var(--r);background:
+     linear-gradient(color-mix(in srgb,var(--burg) 6%,transparent),transparent),
+     repeating-linear-gradient(0deg,var(--surface) 0 26px,var(--surface-2) 26px 27px),
+     repeating-linear-gradient(90deg,transparent 0 26px,var(--line) 26px 27px);
+     display:grid;place-items:center;position:relative;color:var(--ink-soft);font-family:var(--mono);font-size:13px}
+  .mp-logos{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+  .mp{border:1px solid var(--line-strong);border-radius:var(--r);padding:18px 22px;background:var(--card);display:flex;flex-direction:column;gap:6px;min-width:150px}
+  .mp .nm{font-weight:750;font-size:17px}
+  .mp .st{font-family:var(--mono);font-size:12px;color:var(--ok)}
+
+  /* decoder */
+  .decoder{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px;margin-bottom:22px}
+  .letter{aspect-ratio:1;border:1px solid var(--line-strong);border-radius:var(--r);background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:.13s;gap:4px}
+  .letter .L{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--ink)}
+  .letter .t{font-size:10.5px;color:var(--ink-faint);text-align:center;padding:0 6px}
+  .letter:hover{border-color:var(--burg)}
+  .letter[aria-selected="true"]{background:var(--burg);border-color:var(--burg)}
+  .letter[aria-selected="true"] .L{color:#fff}
+  .letter[aria-selected="true"] .t{color:#f0d9dd}
+  @media (prefers-color-scheme:dark){.letter[aria-selected="true"] .L{color:#160d10}.letter[aria-selected="true"] .t{color:#3a1a20}}
+  :root[data-theme="dark"] .letter[aria-selected="true"] .L{color:#160d10}
+  .decode-out{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;min-height:96px}
+  .decode-out .dl{font-family:var(--mono);color:var(--burg);font-weight:700;font-size:15px}
+
+  /* useful cards */
+  .use-card{display:flex;flex-direction:column;gap:10px}
+  .use-card .lab{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--burg)}
+  .use-card h4{font-size:18px}
+  .use-card .lnk{margin-top:auto;font-weight:650;color:var(--burg);font-size:14px;display:inline-flex;gap:6px;align-items:center}
+
+  /* trust numbers */
+  .nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+  .num{background:var(--card);padding:28px 22px;text-align:center}
+  .num .big{font-family:var(--mono);font-size:40px;font-weight:700;color:var(--burg);line-height:1}
+  .num .lab{font-size:13px;color:var(--ink-soft);margin-top:8px}
+  .certs{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+  .cert{border:1px dashed var(--line-strong);border-radius:var(--r);padding:14px 18px;font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);display:flex;gap:9px;align-items:center}
+
+  /* depts */
+  .depts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .dept{border:1px solid var(--line);border-radius:var(--r);padding:20px;background:var(--card)}
+  .dept .role{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--burg);margin-bottom:10px}
+  .dept .ph{font-family:var(--mono);font-weight:650;font-size:15px}
+  .dept .em{font-size:13px;color:var(--ink-soft);margin-top:4px;word-break:break-all}
+
+  /* footer */
+  footer{background:var(--ink);color:#cdbfc3;padding:56px 0 30px;border:0}
+  @media (prefers-color-scheme:dark){footer{background:#0e0a0c}}
+  :root[data-theme="dark"] footer{background:#0e0a0c}
+  footer .top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;padding-bottom:36px;border-bottom:1px solid #3a2f32}
+  footer h5{color:#fff;font-size:14px;margin-bottom:16px;letter-spacing:.02em}
+  footer a{display:block;color:#b3a5a9;font-size:14px;padding:5px 0}
+  footer a:hover{color:var(--burg-bright)}
+  footer .flogo .mark{font-size:22px;font-weight:800;color:#fff}
+  footer .flogo .mark b{color:var(--burg-bright)}
+  footer .desc{font-size:13.5px;color:#9a8d91;margin-top:14px;max-width:34ch;line-height:1.6}
+  footer .social{display:flex;gap:10px;margin-top:18px}
+  footer .social a{width:38px;height:38px;border:1px solid #4a3d41;border-radius:var(--r);display:grid;place-items:center;font-family:var(--mono);font-size:11px;color:#cdbfc3;padding:0}
+  footer .social a:hover{border-color:var(--burg-bright);color:#fff}
+  footer .bottom{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:22px;font-size:12.5px;color:#8a7d81;font-family:var(--mono)}
+
+  /* toast + proto badge */
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(140%);background:var(--ink);color:#fff;padding:14px 22px;border-radius:var(--r);box-shadow:var(--shadow);z-index:200;font-size:14px;display:flex;gap:10px;align-items:center;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+  .toast .ok{color:var(--burg-bright);font-weight:800}
+  .proto{position:fixed;right:16px;bottom:16px;z-index:150;background:var(--burg);color:#fff;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:8px 12px;border-radius:100px;box-shadow:var(--shadow);opacity:.92}
+  @media (prefers-color-scheme:dark){.proto{color:#160d10}}
+
+  /* ===== multipage router ===== */
+  .page{display:none}
+  .page.on{display:block}
+  .page.on{animation:fade .25s ease}
+  .pagehead{background:var(--surface);border-bottom:1px solid var(--line);padding:46px 0}
+  .crumbs{font-family:var(--mono);font-size:12px;color:var(--ink-faint);letter-spacing:.04em;margin-bottom:14px}
+  .crumbs a{color:var(--burg);cursor:pointer}
+  .crumbs span{opacity:.6}
+  .pagehead h1{font-size:clamp(28px,4vw,46px)}
+  .pagehead .ph-lead{color:var(--ink-soft);margin-top:14px;max-width:60ch;font-size:17px}
+
+  /* catalog */
+  .catwrap{display:grid;grid-template-columns:250px 1fr;gap:32px;padding:44px 0}
+  .filters{position:sticky;top:118px;align-self:start;display:flex;flex-direction:column;gap:24px}
+  .fgroup h5{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);margin-bottom:10px;font-family:var(--mono)}
+  .fopt{display:flex;gap:10px;align-items:center;padding:6px 0;font-size:14px;cursor:pointer;color:var(--ink-soft)}
+  .fopt input{accent-color:var(--burg);width:16px;height:16px;cursor:pointer}
+  .fopt:hover{color:var(--ink)}
+  .fopt .cnt{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .fclear{font-size:13px;color:var(--burg);cursor:pointer;font-weight:600}
+  .catcount{font-family:var(--mono);font-size:13px;color:var(--ink-soft);margin-bottom:18px}
+  .catgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .pcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;cursor:pointer;transition:.15s;display:flex;flex-direction:column;text-align:left}
+  .pcard:hover{border-color:var(--burg);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+  .pcard .pv{height:112px;position:relative;border-bottom:1px solid var(--line);background:
+      repeating-linear-gradient(90deg,transparent 0 30px,color-mix(in srgb,var(--burg) 22%,transparent) 30px 32px),
+      repeating-linear-gradient(0deg,var(--surface-2) 0 16px,var(--surface) 16px 18px)}
+  .pcard .pv .cat{position:absolute;top:10px;left:10px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--burg);background:var(--card);border:1px solid var(--burg);border-radius:100px;padding:3px 8px}
+  .pcard .pb{padding:16px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .pcard .art{font-family:var(--mono);font-size:10.5px;color:var(--burg);letter-spacing:.04em}
+  .pcard .pn{font-weight:700;font-size:15.5px;line-height:1.2}
+  .pcard .pd{font-size:13px;color:var(--ink-soft);flex:1}
+  .pcard .pf{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:12px;border-top:1px solid var(--line)}
+  .pcard .pprice{font-family:var(--mono);font-weight:700;font-size:15px}
+  .pcard .pprice small{color:var(--ink-faint);font-weight:400;font-size:11px}
+  .pcard .pstk{font-family:var(--mono);font-size:11px;color:var(--ok)}
+
+  /* product page */
+  .prod{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;padding:44px 0}
+  .gallery .main-v{height:340px;border:1px solid var(--line-strong);border-radius:var(--r-lg);position:relative;background:
+      repeating-linear-gradient(90deg,transparent 0 58px,color-mix(in srgb,var(--burg) 26%,transparent) 58px 60px),
+      repeating-linear-gradient(0deg,var(--surface-2) 0 26px,var(--surface) 26px 28px)}
+  .gallery .main-v .tag{position:absolute;top:16px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--burg);background:var(--card);padding:4px 11px;border:1px solid var(--burg);border-radius:100px}
+  .gallery .thumbs{display:flex;gap:10px;margin-top:12px}
+  .gallery .thumbs div{width:64px;height:52px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface-2);cursor:pointer}
+  .gallery .thumbs div:first-child{border-color:var(--burg)}
+  .prod .info .art2{font-family:var(--mono);font-size:12px;color:var(--burg);letter-spacing:.06em}
+  .prod .info h1{font-size:30px;margin:8px 0 12px}
+  .prod .price-row{display:flex;align-items:baseline;gap:14px;margin:18px 0}
+  .prod .price-row .p{font-family:var(--mono);font-size:32px;font-weight:700}
+  .prod .price-row .u{color:var(--ink-soft);font-size:14px}
+  .prod .buyrow{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}
+  .spectable{width:100%;border-collapse:collapse;margin-top:8px}
+  .spectable td{padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .spectable td:first-child{color:var(--ink-soft)}
+  .spectable td:last-child{text-align:right;font-family:var(--mono);font-weight:650}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:8px}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px}
+  .step .sn{width:34px;height:34px;border-radius:50%;background:var(--burg);color:#fff;display:grid;place-items:center;font-family:var(--mono);font-weight:700;margin-bottom:14px}
+  .step h4{font-size:16px;margin-bottom:7px}
+  .step p{font-size:13.5px;color:var(--ink-soft)}
+  @media (prefers-color-scheme:dark){.step .sn{color:#160d10}}
+  :root[data-theme="dark"] .step .sn{color:#160d10}
+  .terms{width:100%;border-collapse:collapse}
+  .terms td,.terms th{padding:14px 16px;border-bottom:1px solid var(--line);text-align:left;font-size:14.5px}
+  .terms th{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);font-weight:600}
+  .terms td:last-child{font-family:var(--mono);font-weight:650}
+  .faqitem{border:1px solid var(--line);border-radius:var(--r);margin-bottom:10px;background:var(--card)}
+  .faqq{padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;gap:14px;font-weight:600;font-size:15px}
+  .faqq .pm{color:var(--burg);font-family:var(--mono)}
+  .faqa{padding:0 20px;max-height:0;overflow:hidden;transition:.2s;color:var(--ink-soft);font-size:14.5px}
+  .faqitem.open .faqa,.faqitem[data-open="1"] .faqa{max-height:220px;padding:0 20px 18px}
+
+  /* about */
+  .timeline{display:flex;flex-direction:column;gap:0}
+  .tl{display:grid;grid-template-columns:120px 1fr;gap:24px;padding:20px 0;border-bottom:1px solid var(--line)}
+  .tl .yr{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--burg)}
+  .tl h4{font-size:17px;margin-bottom:6px}
+  .tl p{color:var(--ink-soft);font-size:14.5px}
+
+  @media (max-width:960px){
+    .catwrap,.prod{grid-template-columns:1fr}
+    .filters{position:static}
+    .catgrid{grid-template-columns:1fr 1fr}
+    .steps{grid-template-columns:1fr 1fr}
+    .tl{grid-template-columns:80px 1fr;gap:16px}
+    nav.menu,.strip .feats span:nth-child(n+3){display:none}
+    .burger{display:grid;place-items:center}
+    .hero .grid,.flag,.dealer,.selector,.calc{grid-template-columns:1fr}
+    .cols-3,.why-grid,.nums,.depts{grid-template-columns:1fr 1fr}
+    .calc .inp{border-right:0;border-bottom:1px solid var(--line)}
+    footer .top{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:560px){
+    .cols-3,.cols-2,.why-grid,.nums,.depts,.specs,.dealer .offer{grid-template-columns:1fr}
+    .sec-head{flex-direction:column;align-items:flex-start}
+    section{padding:56px 0}
+    form.lead .grid2{grid-template-columns:1fr}
+    .phone,.strip{display:none}
+  }
+</style>
+
+<!-- ============ TOP STRIP ============ -->
+<div class="strip">
+  <div class="wrap">
+    <div class="feats">
+      <span><b>◆</b> Собственное производство с 2009</span>
+      <span><b>◆</b> Отгрузка со склада</span>
+      <span><b>◆</b> Отсрочка платежа 30 дней</span>
+      <span><b>◆</b> Поставляем в федеральные сети</span>
+    </div>
+    <div class="msgs" aria-label="Мессенджеры">
+      <a href="#" title="WhatsApp" aria-label="WhatsApp">wa</a>
+      <a href="#" title="Telegram" aria-label="Telegram">tg</a>
+      <a href="#" title="Позвонить" aria-label="Позвонить">☎</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#" data-nav="home" aria-label="ИЗОБОНД — на главную">
+      <span class="mark">ИЗО<b>БОНД</b></span>
+      <span class="sub">изоляционные материалы · производитель</span>
+    </a>
+    <nav class="menu" aria-label="Главное меню">
+      <a href="#" data-nav="catalog">Продукция</a>
+      <a href="#" data-nav="select">Подбор</a>
+      <a href="#" data-nav="calc">Калькулятор</a>
+      <a href="#" data-nav="apply">Применение</a>
+      <a href="#" data-nav="buy">Где купить</a>
+      <a href="#" data-nav="dealer">Дилерам</a>
+      <a href="#" data-nav="about">О компании</a>
+    </nav>
+    <div class="right">
+      <div class="phone">+7 (495) 134-35-66<small>пн–пт 9:00–18:00</small></div>
+      <a class="btn btn-ghost btn-sm" href="#" onclick="proto(event,'Прайс-лист (PDF) отправлен бы на скачивание')">Скачать прайс</a>
+      <a class="btn btn-primary btn-sm" href="#" data-nav="dealer">Стать дилером</a>
+      <button class="theme-tgl" id="themeBtn" aria-label="Сменить тему" title="Светлая / тёмная тема">◐</button>
+      <button class="burger" id="burger" aria-label="Меню">≡</button>
+    </div>
+  </div>
+</header>
+
+<span id="top"></span>
+
+<main id="page-home" class="page on">
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <div class="eyebrow">Российское производство изоляционных материалов</div>
+        <h1 style="margin-top:16px">Гидро-, паро- и ветроизоляция <span class="hl">от производителя</span> — со склада и с разметкой для монтажа</h1>
+        <p class="lead">Производим рулонную изоляцию для кровли, стен, фундамента, бани и сада. Наличие на складе, отсрочка 30 дней, гарантия срока службы до 50 лет. Разметка нахлёста прямо на полотне — монтаж без ошибок.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#" data-nav="select">Подобрать материал →</a>
+          <a class="btn btn-ghost" href="#" data-nav="dealer">Условия для дилеров</a>
+        </div>
+        <div class="chips">
+          <span class="chip"><i class="dot"></i>с <b>2009</b> года</span>
+          <span class="chip"><i class="dot"></i><b>7</b> категорий продукции</span>
+          <span class="chip"><i class="dot"></i>на полках <b>Лемана ПРО</b></span>
+          <span class="chip"><i class="dot"></i>гарантия до <b>50 лет</b></span>
+        </div>
+      </div>
+      <div class="sheet" aria-label="Технический паспорт материала">
+        <div class="top">
+          <div><div class="code">ART. IZB-A-PREM</div><div class="name">Изобонд A Premium</div></div>
+          <div class="mono" style="font-size:12px;color:var(--ink-faint)">ГИДРО·ВЕТРО</div>
+        </div>
+        <div class="viz" role="img" aria-label="Схема рулона мембраны с разметкой нахлёста">
+          <span class="tag">разметка нахлёста на полотне</span>
+          <span class="measure"></span>
+          <span class="mlabel">ширина рулона 1,5 м</span>
+        </div>
+        <div class="specs">
+          <div class="row"><span class="k">Плотность</span><span class="v">110 г/м²</span></div>
+          <div class="row"><span class="k">Паропроницаемость</span><span class="v">1000 г/м²·24ч</span></div>
+          <div class="row"><span class="k">Водоупорность</span><span class="v">1000 мм в.ст.</span></div>
+          <div class="row"><span class="k">Разрыв (прод.)</span><span class="v">190 Н/5см</span></div>
+          <div class="row"><span class="k">Температура</span><span class="v">−60…+80 °C</span></div>
+          <div class="row"><span class="k">Срок службы</span><span class="v">50 лет</span></div>
+        </div>
+        <div class="foot">
+          <span class="badge-ok">● в наличии на складе</span>
+          <a class="btn btn-ghost btn-sm" href="#flag">Паспорт материала</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TOOLS TEASER ============ -->
+<section id="tools">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">Инструменты подбора</div>
+        <h2>Поможем выбрать и посчитать</h2>
+        <p>Не нужно разбираться в буквах маркировки — подберём материал под конструкцию и посчитаем метраж.</p>
+      </div>
+    </div>
+    <div class="cols-2">
+      <a class="card use-card" href="#" data-nav="select" style="cursor:pointer">
+        <div class="lab">Подбор за 10 секунд</div>
+        <h4 style="font-size:23px">Что вы изолируете?</h4>
+        <p class="muted" style="font-size:15px">Выберите узел конструкции — покажем нужный материал, характеристики и куда его крепить.</p>
+        <span class="lnk">Открыть подбор материала →</span>
+      </a>
+      <a class="card use-card" href="#" data-nav="calc" style="cursor:pointer">
+        <div class="lab">Калькулятор материала</div>
+        <h4 style="font-size:23px">Сколько рулонов на объект</h4>
+        <p class="muted" style="font-size:15px">Введите площадь — посчитаем количество рулонов с учётом нахлёста и запаса на подрезку.</p>
+        <span class="lnk">Открыть калькулятор →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CATALOG ============ -->
+<section id="catalog">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">Каталог продукции</div>
+        <h2>7 категорий — вся изоляция одной марки</h2>
+        <p>Плёнки, мембраны, геотекстиль, укрывной спанбонд и комплектующие — совместимы между собой, как единая система.</p>
+      </div>
+      <div class="idx">02 / КАТАЛОГ</div>
+    </div>
+    <div class="cols-3" id="catGrid"></div>
+  </div>
+</section>
+
+<!-- ============ WHY ============ -->
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">Почему ИЗОБОНД</div>
+        <h2>Отличия, которые видит и закупщик, и монтажник</h2>
+        <p>Мы не гонимся за самой низкой ценой. Мы делаем изоляцию, которую удобно закупать, хранить и монтировать.</p>
+      </div>
+      <div class="idx">03 / ПРЕИМУЩЕСТВА</div>
+    </div>
+    <div class="why-grid">
+      <div class="why-cell"><div class="n">01</div><h4>Производитель, а не посредник</h4><p>Производим сами с 2009 года. Контролируем сырьё, качество и цену — без наценки перекупщиков.</p></div>
+      <div class="why-cell"><div class="n">02</div><h4>Разметка нахлёста на полотне</h4><p>Линии нахлёста нанесены на материал. Бригада укладывает быстро и без ошибок — меньше брака и переделок.</p></div>
+      <div class="why-cell"><div class="n">03</div><h4>Наличие + отсрочка 30 дней</h4><p>Отгрузка со склада в сезон, когда у других «под заказ». Комфортные условия для дилеров и снабженцев.</p></div>
+      <div class="why-cell"><div class="n">04</div><h4>Российский премиум с наличием</h4><p>Полноценная замена ушедшим Tyvek, Delta и Juta — с гарантией, паспортом качества и стабильными поставками.</p></div>
+      <div class="why-cell"><div class="n">05</div><h4>Гарантия и спецификация</h4><p>Паспорт качества и спецификация на каждую партию. Заявленные характеристики подтверждены документами.</p></div>
+      <div class="why-cell"><div class="n">06</div><h4>Готовая система</h4><p>Плёнка + соединительные ленты + крепёж и монтажные комплекты. Всё подобрано, ничего не докупать на стороне.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FLAGSHIP ============ -->
+<section id="flag" style="background:var(--surface)">
+  <div class="wrap">
+    <div class="flag">
+      <div class="sheet" style="box-shadow:var(--shadow)">
+        <div class="top"><div><div class="code">ART. IZB-A-PREM</div><div class="name">Изобонд A Premium</div></div><span class="badge-ok">● флагман</span></div>
+        <div class="viz"><span class="tag">трёхслойная мембрана</span><span class="measure"></span><span class="mlabel">рулон 1,5 × 50 м = 75 м²</span></div>
+        <div class="specs">
+          <div class="row"><span class="k">Материал</span><span class="v">3-слойн. ПП</span></div>
+          <div class="row"><span class="k">Плотность</span><span class="v">110 г/м²</span></div>
+          <div class="row"><span class="k">Паропроницаемость</span><span class="v">1000 г/м²·24ч</span></div>
+          <div class="row"><span class="k">Водоупорность</span><span class="v">1000 мм</span></div>
+          <div class="row"><span class="k">Разрыв прод/попер</span><span class="v">190/140 Н</span></div>
+          <div class="row"><span class="k">Срок службы</span><span class="v">50 лет</span></div>
+        </div>
+        <div class="foot"><span class="mono" style="font-size:12px;color:var(--ink-faint)">УФ-стабильность 3–4 мес.</span><a class="btn btn-primary btn-sm" href="#" data-nav="product" data-prod="A-PREM">К товару</a></div>
+      </div>
+      <div>
+        <span class="kicker">◆ замена ушедшего импорта</span>
+        <h2>Флагман, который занимает место Tyvek и Delta</h2>
+        <p class="muted" style="font-size:16.5px;margin-bottom:6px">После ухода западных брендов профессионалы ищут стабильно доступную премиум-мембрану. Изобонд A Premium даёт то же качество — но с российского склада и с гарантией.</p>
+        <ul>
+          <li><span class="ck">✓</span> <span><b>Разметка нахлёста на полотне</b> — уникально для сегмента: монтаж без рулетки и ошибок.</span></li>
+          <li><span class="ck">✓</span> <span><b>1000 г/м²·24ч паропроницаемость</b> — конструкция «дышит», конденсат не копится.</span></li>
+          <li><span class="ck">✓</span> <span><b>50 лет расчётного срока службы</b> при рабочем диапазоне −60…+80 °C.</span></li>
+          <li><span class="ck">✓</span> <span><b>Наличие и отсрочка</b> — не «под заказ из Европы», а со склада в Подольске.</span></li>
+        </ul>
+        <a class="btn btn-primary" href="#dealer">Запросить условия и образец</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- calculator moved to #page-calc -->
+
+<!-- ============ DEALER TEASER ============ -->
+<section id="dealerteaser" style="background:var(--surface)">
+  <div class="wrap">
+    <div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;padding:36px 34px;border-color:var(--line-strong)">
+      <div style="max-width:56ch">
+        <div class="eyebrow">Дилерам и партнёрам</div>
+        <h2 style="font-size:clamp(24px,3vw,34px);margin:12px 0 10px">Поставки напрямую, без посредников</h2>
+        <p class="muted" style="font-size:16px">Цены производителя, наличие на складе, отсрочка 30 дней и маркетинговая поддержка. Уже поставляем в федеральные сети.</p>
+      </div>
+      <a class="btn btn-primary" href="#" data-nav="dealer">Условия и заявка →</a>
+    </div>
+  </div>
+</section>
+
+<!-- where-to-buy moved to #page-buy -->
+
+<!-- useful/knowledge moved to #page-knowledge -->
+
+<!-- ============ TRUST / ABOUT ============ -->
+<section id="about" style="background:var(--surface)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">О компании</div>
+        <h2>Производство, которому доверяют сети</h2>
+        <p>С 2009 года прошли путь от торговой компании до собственного производства с несколькими производственными линиями.</p>
+      </div>
+      <div class="idx">08 / КОМПАНИЯ</div>
+    </div>
+    <div class="nums">
+      <div class="num"><div class="big tnum">2009</div><div class="lab">год основания компании</div></div>
+      <div class="num"><div class="big tnum">7</div><div class="lab">категорий продукции</div></div>
+      <div class="num"><div class="big tnum">50</div><div class="lab">лет расчётный срок службы</div></div>
+      <div class="num"><div class="big tnum">30</div><div class="lab">дней отсрочка дилерам</div></div>
+    </div>
+    <div class="certs">
+      <span class="cert">▣ Сертификаты соответствия</span>
+      <span class="cert">▣ Паспорт качества на партию</span>
+      <span class="cert">▣ Спецификация и ТУ</span>
+      <span class="cert">▣ Благодарственные письма партнёров</span>
+      <span class="mono" style="font-size:12px;color:var(--ink-faint);align-self:center">(документы загрузит клиент)</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section id="finalcta">
+  <div class="wrap">
+    <div class="card" style="text-align:center;padding:52px 34px;border-color:var(--line-strong)">
+      <div class="eyebrow">Готовы помочь с выбором</div>
+      <h2 style="font-size:clamp(26px,3.4vw,38px);margin:14px 0 12px">Не знаете, что выбрать?</h2>
+      <p class="muted" style="font-size:16.5px;max-width:52ch;margin:0 auto 26px">Оставьте заявку — перезвоним, подберём материал под конструкцию и посчитаем стоимость под ваш объект.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <a class="btn btn-primary" href="#" data-nav="contacts">Оставить заявку →</a>
+        <a class="btn btn-ghost" href="#" data-nav="select">Подобрать материал</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main><!-- /page-home -->
+
+<!-- ============ PAGE: CATALOG ============ -->
+<main id="page-catalog" class="page">
+  <div class="pagehead">
+    <div class="wrap">
+      <div class="crumbs"><a data-nav="home">Главная</a> <span>/</span> Продукция</div>
+      <h1>Каталог продукции</h1>
+      <p class="ph-lead">Вся рулонная изоляция ИЗОБОНД в одном каталоге. Фильтруйте по назначению и типу — характеристики и наличие видны сразу.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="catwrap">
+      <aside class="filters">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span class="mono" style="font-size:12px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.08em">Фильтры</span>
+          <span class="fclear" id="fClear">Сбросить</span>
+        </div>
+        <div class="fgroup">
+          <h5>Назначение</h5>
+          <label class="fopt"><input type="checkbox" class="f" data-f="use" value="roof"> Кровля</label>
+          <label class="fopt"><input type="checkbox" class="f" data-f="use" value="wall"> Стены / фасад</label>
+          <label class="fopt"><input type="checkbox" class="f" data-f="use" value="floor"> Пол / перекрытие</label>
+          <label class="fopt"><input type="checkbox" class="f" data-f="use" value="bath"> Баня / сауна</label>
+          <label class="fopt"><input type="checkbox" class="f" data-f="use" value="garden"> Сад / огород</label>
+          <label class="fopt"><input type="checkbox" class="f" data-f="use" value="geo"> Грунт / дренаж</label>
+        </div>
+        <div class="fgroup">
+          <h5>Тип материала</h5>
+          <label class="fopt"><input type="checkbox" class="f" data-f="type" value="Гидроизоляция"> Гидроизоляция</label>
+          <label class="fopt"><input type="checkbox" class="f" data-f="type" value="Пароизоляция"> Пароизоляция</label>
+          <label class="fopt"><input type="checkbox" class="f" data-f="type" value="Мембрана"> Мембрана</label>
+          <label class="fopt"><input type="checkbox" class="f" data-f="type" value="Геотекстиль"> Геотекстиль</label>
+          <label class="fopt"><input type="checkbox" class="f" data-f="type" value="Спанбонд"> Спанбонд</label>
+          <label class="fopt"><input type="checkbox" class="f" data-f="type" value="Фольга"> Фольгированная</label>
+        </div>
+        <div class="fgroup">
+          <h5>Наличие</h5>
+          <label class="fopt"><input type="checkbox" class="f" data-f="stock" value="1"> Только в наличии</label>
+        </div>
+      </aside>
+      <div>
+        <div class="catcount" id="catCount"></div>
+        <div class="catgrid" id="catalogGrid"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ============ PAGE: PRODUCT ============ -->
+<main id="page-product" class="page">
+  <div class="pagehead">
+    <div class="wrap">
+      <div class="crumbs"><a data-nav="home">Главная</a> <span>/</span> <a data-nav="catalog">Продукция</a> <span>/</span> <span id="prodCrumb">Изобонд A Premium</span></div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="prod">
+      <div class="gallery">
+        <div class="main-v"><span class="tag" id="prodTag">разметка нахлёста на полотне</span></div>
+        <div class="thumbs"><div></div><div></div><div></div><div></div></div>
+        <div class="card" style="margin-top:20px;padding:18px 20px">
+          <div class="mono" style="font-size:11px;color:var(--burg);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Применение</div>
+          <p class="muted" style="font-size:14.5px" id="prodUse">Скатная кровля, каркасные стены, вентилируемые фасады — как ветро-влагозащита с возможностью укладки прямо на утеплитель.</p>
+        </div>
+      </div>
+      <div class="info">
+        <div class="art2" id="prodArt">ART. IZB-A-PREM · Гидро-ветроизоляция</div>
+        <h1 id="prodName">Изобонд A Premium</h1>
+        <span class="badge-ok">● в наличии на складе в Подольске</span>
+        <div class="price-row">
+          <span class="p" id="prodPrice">347 ₽</span>
+          <span class="u">за рулон, от · опт — по запросу</span>
+        </div>
+        <p class="muted" style="font-size:15.5px" id="prodDesc">Трёхслойная супердиффузионная мембрана с разметкой нахлёста на полотне. Полноценная замена ушедшим Tyvek и Delta — с российского склада и с гарантией срока службы 50 лет.</p>
+        <div class="buyrow">
+          <a class="btn btn-primary" href="#" data-nav="calc">Рассчитать на объект</a>
+          <a class="btn btn-ghost" href="#" onclick="proto(event,'Запрос оптовой цены ушёл бы менеджеру')">Запросить опт</a>
+          <a class="btn btn-ghost" href="#" data-nav="buy">Где купить</a>
+        </div>
+        <h3 style="font-size:18px;margin:26px 0 4px">Технические характеристики</h3>
+        <table class="spectable" id="prodSpecs">
+          <tr><td>Материал</td><td>3-слойный полипропилен</td></tr>
+          <tr><td>Плотность</td><td>110 г/м²</td></tr>
+          <tr><td>Паропроницаемость</td><td>1000 г/м²·24ч</td></tr>
+          <tr><td>Водоупорность</td><td>1000 мм вод. ст.</td></tr>
+          <tr><td>Разрыв (прод./попер.)</td><td>190 / 140 Н/5см</td></tr>
+          <tr><td>УФ-стабильность</td><td>3–4 месяца</td></tr>
+          <tr><td>Температура эксплуатации</td><td>−60…+80 °C</td></tr>
+          <tr><td>Рулон</td><td>1,5 × 50 м = 75 м²</td></tr>
+          <tr><td>Срок службы</td><td>50 лет</td></tr>
+        </table>
+      </div>
+    </div>
+    <div style="padding-bottom:50px">
+      <h3 style="font-size:20px;margin-bottom:18px">С этим товаром берут</h3>
+      <div class="catgrid" id="prodRelated"></div>
+    </div>
+  </div>
+</main>
+
+<!-- ============ PAGE: DEALER ============ -->
+<main id="page-dealer" class="page">
+  <div class="pagehead">
+    <div class="wrap">
+      <div class="crumbs"><a data-nav="home">Главная</a> <span>/</span> Дилерам и партнёрам</div>
+      <h1>Станьте дилером ИЗОБОНД</h1>
+      <p class="ph-lead">Прямые цены от производителя, наличие на складе, отсрочка и маркетинговая поддержка. Работаем с оптовыми базами, строймагазинами и региональными дистрибьюторами по РФ и СНГ.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <section style="border:0;padding:44px 0 10px">
+      <div class="sec-head"><div><div class="eyebrow">Что вы получаете</div><h2>Условия партнёрства</h2></div></div>
+      <div class="cols-3">
+        <div class="card"><div style="font-size:22px;color:var(--burg)">₽</div><h4 style="margin:10px 0 6px">Цена от производителя</h4><p class="muted" style="font-size:14px">Без наценки посредников. Прогрессивная скидка по объёму закупки.</p></div>
+        <div class="card"><div style="font-size:22px;color:var(--burg)">◷</div><h4 style="margin:10px 0 6px">Отсрочка 30 дней</h4><p class="muted" style="font-size:14px">Товарный кредит для проверенных партнёров — торгуете нашим товаром без заморозки денег.</p></div>
+        <div class="card"><div style="font-size:22px;color:var(--burg)">▣</div><h4 style="margin:10px 0 6px">Наличие и отгрузка</h4><p class="muted" style="font-size:14px">Склад в Подольске, отгрузка в сезон без «под заказ».</p></div>
+        <div class="card"><div style="font-size:22px;color:var(--burg)">◆</div><h4 style="margin:10px 0 6px">Маркетинг-поддержка</h4><p class="muted" style="font-size:14px">Образцы, POS-материалы, обучение продавцов, контент для карточек и сайта.</p></div>
+        <div class="card"><div style="font-size:22px;color:var(--burg)">✓</div><h4 style="margin:10px 0 6px">Узнаваемый товар</h4><p class="muted" style="font-size:14px">Уже на полках федеральных сетей — покупатель знает марку.</p></div>
+        <div class="card"><div style="font-size:22px;color:var(--burg)">⛨</div><h4 style="margin:10px 0 6px">Защита территории</h4><p class="muted" style="font-size:14px">Прозрачная политика по регионам и защита от демпинга. <span class="mono" style="font-size:11px">(уточняется)</span></p></div>
+      </div>
+    </section>
+
+    <section style="border:0;padding:24px 0">
+      <div class="sec-head"><div><div class="eyebrow">Прозрачно</div><h2>Базовые условия</h2><p>Финальные цифры зависят от объёма и региона — уточняются с менеджером.</p></div></div>
+      <div class="card" style="padding:0;overflow-x:auto">
+        <table class="terms">
+          <tr><th>Параметр</th><th>Условие</th></tr>
+          <tr><td>Минимальная партия</td><td>по согласованию</td></tr>
+          <tr><td>Отсрочка платежа</td><td>до 30 дней</td></tr>
+          <tr><td>Скидка по объёму</td><td>прогрессивная</td></tr>
+          <tr><td>Отгрузка</td><td>склад Подольск / доставка</td></tr>
+          <tr><td>География</td><td>РФ и СНГ</td></tr>
+          <tr><td>Поддержка</td><td>образцы, POS, обучение</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <section style="border:0;padding:24px 0">
+      <div class="sec-head"><div><div class="eyebrow">Как начать</div><h2>4 шага до первой поставки</h2></div></div>
+      <div class="steps">
+        <div class="step"><div class="sn">1</div><h4>Заявка</h4><p>Оставляете контакты и регион. Пришлём дилерский прайс.</p></div>
+        <div class="step"><div class="sn">2</div><h4>Условия</h4><p>Согласуем объём, скидку и отсрочку под вашу точку.</p></div>
+        <div class="step"><div class="sn">3</div><h4>Договор</h4><p>Подписываем договор и оформляем первую отгрузку.</p></div>
+        <div class="step"><div class="sn">4</div><h4>Старт продаж</h4><p>Получаете товар, образцы и POS. Начинаете торговать.</p></div>
+      </div>
+    </section>
+
+    <section style="border:0;padding:24px 0">
+      <div class="dealer">
+        <div>
+          <div class="sec-head"><div><div class="eyebrow">Вопросы</div><h2>Частые вопросы дилеров</h2></div></div>
+          <div class="faqitem" data-open="1"><div class="faqq">Какая минимальная партия для старта? <span class="pm">–</span></div><div class="faqa">Минимальная партия обсуждается индивидуально в зависимости от вашего формата — от оптовой базы до одной торговой точки.</div></div>
+          <div class="faqitem"><div class="faqq">Даёте ли образцы? <span class="pm">+</span></div><div class="faqa">Да, предоставляем образцы продукции и POS-материалы для оформления точки продаж.</div></div>
+          <div class="faqitem"><div class="faqq">Как быстро отгружаете в сезон? <span class="pm">+</span></div><div class="faqa">Держим склад в Подольске и отгружаем в сезон без ожидания «под заказ» — это одно из ключевых отличий от конкурентов.</div></div>
+          <div class="faqitem"><div class="faqq">Есть ли защита территории? <span class="pm">+</span></div><div class="faqa">Прорабатываем прозрачную региональную политику. Точные условия обсудим при подключении.</div></div>
+        </div>
+        <form class="lead" onsubmit="proto(event,'Заявка на дилерство принята — менеджер свяжется в течение дня')">
+          <h3>Получить дилерский прайс</h3>
+          <p class="muted" style="font-size:14px;margin-bottom:18px">Пришлём прайс и условия под ваш регион и объём.</p>
+          <div class="grid2">
+            <div class="field"><label>Имя</label><input required placeholder="Как к вам обращаться"></div>
+            <div class="field"><label>Компания</label><input required placeholder="Название и город"></div>
+            <div class="field"><label>Телефон</label><input required type="tel" placeholder="+7 ..."></div>
+            <div class="field"><label>E-mail</label><input type="email" placeholder="you@company.ru"></div>
+          </div>
+          <div class="field"><label>Регион / чем занимаетесь</label><input placeholder="Напр.: опт стройматериалов, Тула"></div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center" type="submit">Отправить заявку →</button>
+          <p class="consent">Нажимая кнопку, вы соглашаетесь на обработку данных. <span class="mono">(прототип — заявка не отправляется)</span></p>
+        </form>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- ============ PAGE: ABOUT ============ -->
+<main id="page-about" class="page">
+  <div class="pagehead">
+    <div class="wrap">
+      <div class="crumbs"><a data-nav="home">Главная</a> <span>/</span> О компании</div>
+      <h1>Производитель, которому доверяют сети</h1>
+      <p class="ph-lead">С 2009 года — путь от торговой компании до собственного производства рулонных изоляционных материалов. Сегодня продукция ИЗОБОНД стоит на полках федеральных сетей.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <section style="border:0;padding:44px 0 20px">
+      <div class="cols-2" style="align-items:center;gap:40px">
+        <div>
+          <div class="eyebrow">Наша миссия</div>
+          <h2 style="font-size:28px;margin:14px 0">Изоляция, которая служит десятилетиями</h2>
+          <p class="muted" style="font-size:16px">Обеспечивать строителей и владельцев жилья надёжными изоляционными материалами российского производства, которые повышают энергоэффективность зданий, продлевают срок их службы и создают комфортный микроклимат.</p>
+        </div>
+        <div class="nums" style="grid-template-columns:1fr 1fr">
+          <div class="num"><div class="big tnum">2009</div><div class="lab">год основания</div></div>
+          <div class="num"><div class="big tnum">7</div><div class="lab">категорий продукции</div></div>
+          <div class="num"><div class="big tnum">50</div><div class="lab">лет срок службы</div></div>
+          <div class="num"><div class="big tnum">РФ+СНГ</div><div class="lab">география поставок</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section style="border:0;padding:20px 0">
+      <div class="sec-head"><div><div class="eyebrow">История</div><h2>Как мы росли</h2></div></div>
+      <div class="timeline">
+        <div class="tl"><div class="yr">2009</div><div><h4>Старт бизнеса</h4><p>Компания начинала как посредник между поставщиками и покупателями изоляционных материалов.</p></div></div>
+        <div class="tl"><div class="yr">2010‑е</div><div><h4>Собственное производство</h4><p>С ростом спроса собственник принял решение о запуске производства: закуплены первые станки, расширены площади.</p></div></div>
+        <div class="tl"><div class="yr">Сегодня</div><div><h4>Марка на полках сетей</h4><p>Несколько производственных линий, широкий ассортимент и поставки в федеральные розничные сети (Лемана ПРО).</p></div></div>
+      </div>
+    </section>
+
+    <section style="border:0;padding:20px 0 50px">
+      <div class="sec-head"><div><div class="eyebrow">Гарантии качества</div><h2>Документы и сертификаты</h2><p>Каждая партия сопровождается паспортом качества. Полный пакет документов загрузит клиент.</p></div></div>
+      <div class="certs">
+        <span class="cert">▣ Сертификаты соответствия</span>
+        <span class="cert">▣ Паспорт качества на партию</span>
+        <span class="cert">▣ Технические условия (ТУ)</span>
+        <span class="cert">▣ Благодарственные письма партнёров</span>
+      </div>
+      <div class="card" style="margin-top:26px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center">
+        <div><h4 style="margin-bottom:6px">Хотите сотрудничать?</h4><p class="muted" style="font-size:14px">Станьте дилером или закажите продукцию оптом напрямую.</p></div>
+        <a class="btn btn-primary" href="#" data-nav="dealer">Условия для дилеров →</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- ============ PAGE: SELECT ============ -->
+<main id="page-select" class="page">
+  <div class="pagehead">
+    <div class="wrap">
+      <div class="crumbs"><a data-nav="home">Главная</a> <span>/</span> Подбор материала</div>
+      <h1>Подбор материала за 10 секунд</h1>
+      <p class="ph-lead">Выберите узел конструкции — покажем нужный материал ИЗОБОНД, его характеристики и куда крепить. Без разбора «букв» маркировки.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding:44px 0">
+    <div class="selector">
+      <div class="nodes" role="listbox" aria-label="Тип конструкции" id="nodes">
+        <button class="node" role="option" data-key="roof" aria-selected="true"><span class="ic">🏠</span> Скатная кровля <span class="arw">→</span></button>
+        <button class="node" role="option" data-key="wall"><span class="ic">🧱</span> Каркасная стена <span class="arw">→</span></button>
+        <button class="node" role="option" data-key="facade"><span class="ic">🏢</span> Вентфасад <span class="arw">→</span></button>
+        <button class="node" role="option" data-key="floor"><span class="ic">🪵</span> Пол / перекрытие <span class="arw">→</span></button>
+        <button class="node" role="option" data-key="bath"><span class="ic">🔥</span> Баня и сауна <span class="arw">→</span></button>
+        <button class="node" role="option" data-key="garden"><span class="ic">🌱</span> Сад и огород <span class="arw">→</span></button>
+        <button class="node" role="option" data-key="geo"><span class="ic">🛣️</span> Грунт / дренаж <span class="arw">→</span></button>
+      </div>
+      <div class="result" id="selResult" aria-live="polite"></div>
+    </div>
+  </div>
+</main>
+
+<!-- ============ PAGE: CALC ============ -->
+<main id="page-calc" class="page">
+  <div class="pagehead">
+    <div class="wrap">
+      <div class="crumbs"><a data-nav="home">Главная</a> <span>/</span> Калькулятор материала</div>
+      <h1>Калькулятор материала</h1>
+      <p class="ph-lead">Введите площадь поверхности — посчитаем количество рулонов с учётом нахлёста и запаса на подрезку. Ни у Мегафлекса, ни у Наноизола такого инструмента нет.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding:44px 0">
+    <div class="calc">
+      <div class="inp">
+        <div class="field">
+          <label for="cType">Тип материала</label>
+          <select id="cType">
+            <option value="75" data-nap="0.15">Гидро-/ветроизоляция (рулон 1,5 × 50 м = 75 м²)</option>
+            <option value="70" data-nap="0.15">Пароизоляция B (рулон 1,6 × 43,75 м = 70 м²)</option>
+            <option value="90" data-nap="0.10">Супердиффузионная мембрана (90 м²)</option>
+            <option value="100" data-nap="0.10">Геотекстиль (рулон 2 × 50 м = 100 м²)</option>
+            <option value="34" data-nap="0.05">Укрывной спанбонд (рулон 3,2 × 10,6 м ≈ 34 м²)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="cArea">Площадь поверхности, м²</label>
+          <input id="cArea" type="number" min="1" value="180" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="cReserve">Запас на подрезку</label>
+          <select id="cReserve"><option value="0.05">+5% (аккуратный монтаж)</option><option value="0.1" selected>+10% (стандарт)</option><option value="0.15">+15% (сложная кровля)</option></select>
+        </div>
+        <p class="mono" style="font-size:12px;color:var(--ink-faint)">Расчёт ориентировочный. Точную раскладку подберёт менеджер.</p>
+      </div>
+      <div class="out">
+        <div class="readout">
+          <div class="big tnum" id="cRolls">3</div>
+          <div class="u">рулона к заказу</div>
+        </div>
+        <div class="breakdown">
+          <div class="r"><span>Полезная площадь с нахлёстом</span><span class="v tnum" id="cEff">—</span></div>
+          <div class="r"><span>С запасом на подрезку</span><span class="v tnum" id="cTot">—</span></div>
+          <div class="r"><span>Площадь одного рулона</span><span class="v tnum" id="cRoll">—</span></div>
+        </div>
+        <a class="btn btn-primary" style="width:100%;justify-content:center;margin-top:20px" href="#" onclick="proto(event,'Расчёт ушёл бы менеджеру — вам перезвонят с ценой')">Получить расчёт и цену →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ============ PAGE: APPLY ============ -->
+<main id="page-apply" class="page">
+  <div class="pagehead">
+    <div class="wrap">
+      <div class="crumbs"><a data-nav="home">Главная</a> <span>/</span> Применение</div>
+      <h1>Где и как применяют изоляцию ИЗОБОНД</h1>
+      <p class="ph-lead">Каждый узел конструкции — свой материал и своя схема «пирога». Ниже — типовые сценарии применения с рекомендованными позициями.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding:44px 0">
+    <div class="cols-2" id="applyGrid"></div>
+  </div>
+</main>
+
+<!-- ============ PAGE: BUY ============ -->
+<main id="page-buy" class="page">
+  <div class="pagehead">
+    <div class="wrap">
+      <div class="crumbs"><a data-nav="home">Главная</a> <span>/</span> Где купить</div>
+      <h1>Где купить продукцию ИЗОБОНД</h1>
+      <p class="ph-lead">В федеральных сетях, на маркетплейсах, у дилеров в вашем городе или напрямую от производителя оптом.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding:44px 0">
+    <div class="tabs" role="tablist" id="buyTabs">
+      <button class="tab" role="tab" data-t="retail" aria-selected="true">Розничные сети</button>
+      <button class="tab" role="tab" data-t="mp">Маркетплейсы</button>
+      <button class="tab" role="tab" data-t="dealers">Дилеры по регионам</button>
+      <button class="tab" role="tab" data-t="opt">Оптом</button>
+    </div>
+    <div class="tabpane on" data-p="retail">
+      <div class="cols-3">
+        <div class="card"><div class="mono" style="color:var(--burg);font-size:13px">СЕТЬ DIY</div><h4 style="margin:8px 0">Лемана ПРО</h4><p class="muted" style="font-size:14px">Изобонд представлен на полках. Найдите ближайший гипермаркет и спросите нашу марку.</p></div>
+        <div class="card"><div class="mono" style="color:var(--burg);font-size:13px">СЕТЬ DIY</div><h4 style="margin:8px 0">Строительные гипермаркеты</h4><p class="muted" style="font-size:14px">Список сетей-партнёров региона — обновляется. <span class="mono">(данные наполнит клиент)</span></p></div>
+        <div class="card"><div class="mono" style="color:var(--burg);font-size:13px">МАГАЗИНЫ</div><h4 style="margin:8px 0">Локальные строймагазины</h4><p class="muted" style="font-size:14px">Более 100 точек-партнёров. Смотрите на карте дилеров.</p></div>
+      </div>
+    </div>
+    <div class="tabpane" data-p="mp">
+      <div class="mp-logos">
+        <div class="mp"><div class="nm">OZON</div><div class="st">● официальный магазин</div><span class="mono" style="font-size:11px;color:var(--ink-faint)">запуск в плане</span></div>
+        <div class="mp"><div class="nm">Wildberries</div><div class="st">● официальный магазин</div><span class="mono" style="font-size:11px;color:var(--ink-faint)">запуск в плане</span></div>
+        <div class="mp"><div class="nm">Яндекс Маркет</div><div class="st">● официальный магазин</div><span class="mono" style="font-size:11px;color:var(--ink-faint)">запуск в плане</span></div>
+      </div>
+      <p class="muted" style="margin-top:16px;font-size:14px;max-width:60ch">Прямые продажи с гарантией производителя, отзывы и быстрая доставка. Официальные магазины защищают от подделок и «серых» продавцов.</p>
+    </div>
+    <div class="tabpane" data-p="dealers">
+      <div class="mapph">интерактивная карта дилеров РФ и СНГ · фильтр по городу</div>
+      <p class="muted" style="margin-top:14px;font-size:14px">Введите город — покажем ближайшие точки продаж. <span class="mono">(карта подключается на этапе разработки)</span></p>
+    </div>
+    <div class="tabpane" data-p="opt">
+      <div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap">
+        <div><h4 style="margin-bottom:6px">Оптовый заказ напрямую от производителя</h4><p class="muted" style="font-size:14px">Крупные партии, отсрочка 30 дней, отгрузка со склада в Подольске.</p></div>
+        <a class="btn btn-primary" href="#" data-nav="dealer">Запросить оптовый прайс →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ============ PAGE: KNOWLEDGE ============ -->
+<main id="page-knowledge" class="page">
+  <div class="pagehead">
+    <div class="wrap">
+      <div class="crumbs"><a data-nav="home">Главная</a> <span>/</span> Полезное</div>
+      <h1>База знаний: инструкции и схемы</h1>
+      <p class="ph-lead">Разберётесь без прораба: инструкции по монтажу, схемы «пирога» конструкции и расшифровка маркировки материалов.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding:44px 0">
+    <div class="cols-3" style="margin-bottom:34px">
+      <div class="card use-card"><div class="lab">Видеоинструкция</div><h4>Какой стороной укладывать плёнку?</h4><p class="muted" style="font-size:14px">Частая ошибка монтажа — за 2 минуты объясняем, как не перепутать.</p><a class="lnk" href="#" onclick="proto(event,'Открылось бы видео')">Смотреть →</a></div>
+      <div class="card use-card"><div class="lab">Схема</div><h4>Пирог кровли, стены и пола</h4><p class="muted" style="font-size:14px">Где гидроизоляция, где пароизоляция, где мембрана — на понятных схемах.</p><a class="lnk" href="#" data-nav="apply">Открыть →</a></div>
+      <div class="card use-card"><div class="lab">Гайд</div><h4>Как выбрать плотность и метраж</h4><p class="muted" style="font-size:14px">Подбор материала под задачу, климат и бюджет объекта.</p><a class="lnk" href="#" data-nav="select">К подбору →</a></div>
+    </div>
+    <div class="card">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--burg);margin-bottom:14px">Расшифровка маркировки — нажмите букву</div>
+      <div class="decoder" id="decoder">
+        <button class="letter" data-l="A" aria-selected="true"><span class="L">A</span><span class="t">ветро-влагозащита</span></button>
+        <button class="letter" data-l="AS"><span class="L">AS</span><span class="t">супердиффуз. мембрана</span></button>
+        <button class="letter" data-l="B"><span class="L">B</span><span class="t">пароизоляция</span></button>
+        <button class="letter" data-l="C"><span class="L">C</span><span class="t">усиленная пароизол.</span></button>
+        <button class="letter" data-l="D"><span class="L">D</span><span class="t">универсальная</span></button>
+        <button class="letter" data-l="FB"><span class="L">FB</span><span class="t">фольга (баня)</span></button>
+        <button class="letter" data-l="RS"><span class="L">RS</span><span class="t">армированная</span></button>
+      </div>
+      <div class="decode-out" id="decodeOut" aria-live="polite"></div>
+    </div>
+  </div>
+</main>
+
+<!-- ============ PAGE: DELIVERY ============ -->
+<main id="page-delivery" class="page">
+  <div class="pagehead">
+    <div class="wrap">
+      <div class="crumbs"><a data-nav="home">Главная</a> <span>/</span> Доставка и оплата</div>
+      <h1>Доставка и оплата</h1>
+      <p class="ph-lead">Отгружаем со склада в Подольске по всей России и СНГ. Гибкие условия оплаты, отсрочка для дилеров.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding:44px 0">
+    <div class="cols-3" style="margin-bottom:30px">
+      <div class="card"><div style="font-size:22px;color:var(--burg)">▣</div><h4 style="margin:10px 0 6px">Самовывоз со склада</h4><p class="muted" style="font-size:14px">г. Подольск, пос. Сельхозтехника. Отгрузка в день обращения при наличии.</p></div>
+      <div class="card"><div style="font-size:22px;color:var(--burg)">🚚</div><h4 style="margin:10px 0 6px">Доставка по РФ и СНГ</h4><p class="muted" style="font-size:14px">Транспортными компаниями до терминала или адреса. Расчёт стоимости — по объёму и региону.</p></div>
+      <div class="card"><div style="font-size:22px;color:var(--burg)">◷</div><h4 style="margin:10px 0 6px">Отгрузка в сезон</h4><p class="muted" style="font-size:14px">Держим склад — отгружаем в пик сезона, когда у конкурентов «под заказ».</p></div>
+    </div>
+    <div class="cols-2" style="align-items:start">
+      <div class="card" style="padding:0;overflow-x:auto">
+        <table class="terms">
+          <tr><th>Оплата</th><th>Условие</th></tr>
+          <tr><td>Безналичный расчёт</td><td>для юрлиц и ИП</td></tr>
+          <tr><td>Отсрочка платежа</td><td>до 30 дней (дилерам)</td></tr>
+          <tr><td>Предоплата</td><td>для новых клиентов</td></tr>
+          <tr><td>Документы</td><td>полный пакет, НДС</td></tr>
+        </table>
+      </div>
+      <div>
+        <div class="faqitem" data-open="1"><div class="faqq">Как быстро отгружаете? <span class="pm">–</span></div><div class="faqa">При наличии на складе — в день обращения или на следующий рабочий день.</div></div>
+        <div class="faqitem"><div class="faqq">Возможна ли доставка в мой регион? <span class="pm">+</span></div><div class="faqa">Да, отправляем транспортными компаниями по всей России и СНГ. Стоимость зависит от объёма и удалённости.</div></div>
+        <div class="faqitem"><div class="faqq">Есть ли отсрочка платежа? <span class="pm">+</span></div><div class="faqa">Для проверенных дилеров — отсрочка до 30 дней. Условия обсуждаются индивидуально.</div></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ============ PAGE: NEWS ============ -->
+<main id="page-news" class="page">
+  <div class="pagehead">
+    <div class="wrap">
+      <div class="crumbs"><a data-nav="home">Главная</a> <span>/</span> Новости и акции</div>
+      <h1>Новости и акции</h1>
+      <p class="ph-lead">Обновления продукции, сезонные акции и специальные предложения для дилеров и частных покупателей.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding:44px 0">
+    <div class="cols-3">
+      <div class="card use-card"><div class="pv" style="height:120px;border:1px solid var(--line);border-radius:var(--r);background:repeating-linear-gradient(90deg,transparent 0 30px,color-mix(in srgb,var(--burg) 22%,transparent) 30px 32px),repeating-linear-gradient(0deg,var(--surface-2) 0 16px,var(--surface) 16px 18px)"></div><div class="lab" style="margin-top:12px">Продукт · акция</div><h4>Изобонд Premium в новой упаковке — с разметкой нахлёста</h4><p class="muted" style="font-size:14px">Обновили флагманскую линейку: линии нахлёста теперь нанесены прямо на полотно.</p><a class="lnk" href="#" onclick="proto(event,'Открылась бы новость целиком')">Читать →</a></div>
+      <div class="card use-card"><div class="lab">Акция</div><h4>Сезонные скидки на укрывной спанбонд</h4><p class="muted" style="font-size:14px">Специальные цены к дачному сезону. <span class="mono" style="font-size:11px">(наполнит клиент)</span></p><a class="lnk" href="#" onclick="proto(event,'Открылись бы условия акции')">Подробнее →</a></div>
+      <div class="card use-card"><div class="lab">Спецпредложение</div><h4>Скидки на позиции со склада</h4><p class="muted" style="font-size:14px">Выгодные цены на отдельные партии для быстрой реализации.</p><a class="lnk" href="#" data-nav="dealer">Дилерам →</a></div>
+    </div>
+    <p class="muted mono" style="font-size:12px;margin-top:24px;color:var(--ink-faint)">Раздел наполняется контентом клиента: анонсы, статьи, условия акций.</p>
+  </div>
+</main>
+
+<!-- ============ PAGE: CONTACTS ============ -->
+<main id="page-contacts" class="page">
+  <div class="pagehead">
+    <div class="wrap">
+      <div class="crumbs"><a data-nav="home">Главная</a> <span>/</span> Контакты</div>
+      <h1>Контакты</h1>
+      <p class="ph-lead">Свяжитесь с профильным отделом напрямую — не придётся ждать переключения между менеджерами.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding:44px 0">
+    <div class="depts" style="margin-bottom:30px">
+      <div class="dept"><div class="role">Отдел продаж</div><div class="ph">+7 (495) 134-35-66</div><div class="em">info@van-market.com</div></div>
+      <div class="dept"><div class="role">Дилерам и партнёрам</div><div class="ph">+7 (495) 134-35-66 доб. 124</div><div class="em">marketing@van-market.com</div></div>
+      <div class="dept"><div class="role">Отдел закупок</div><div class="ph">+7 (926) 039-96-86</div><div class="em">info@van-market.com</div></div>
+      <div class="dept"><div class="role">Отгрузка / склад</div><div class="ph">+7 (495) 134-35-66</div><div class="em">г. Подольск, Сельхозтехника</div></div>
+    </div>
+    <div class="cols-2" style="align-items:start;gap:32px">
+      <div>
+        <div class="card" style="margin-bottom:18px">
+          <h4 style="margin-bottom:10px">Реквизиты и адрес</h4>
+          <p class="muted" style="font-size:14.5px">ООО ТД «Ван Маркет»<br>142116, Московская обл., г. Подольск, пос. Сельхозтехника, ул. Промзона, д. 1а, офис 1<br>Режим работы: ПН–ЧТ 9:00–18:00, ПТ 9:00–17:00</p>
+        </div>
+        <div class="mapph">карта проезда · г. Подольск</div>
+      </div>
+      <form class="lead" onsubmit="proto(event,'Заявка принята — мы перезвоним вам')">
+        <h3>Написать нам</h3>
+        <p class="muted" style="font-size:14px;margin-bottom:18px">Оставьте контакты и вопрос — ответим в рабочее время.</p>
+        <div class="grid2">
+          <div class="field"><label>Имя</label><input required placeholder="Как к вам обращаться"></div>
+          <div class="field"><label>Телефон</label><input required type="tel" placeholder="+7 ..."></div>
+        </div>
+        <div class="field"><label>E-mail</label><input type="email" placeholder="you@company.ru"></div>
+        <div class="field"><label>Сообщение</label><input placeholder="Компания и суть вопроса"></div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center" type="submit">Отправить →</button>
+        <p class="consent">Нажимая кнопку, вы соглашаетесь на обработку данных. <span class="mono">(прототип — заявка не отправляется)</span></p>
+      </form>
+    </div>
+  </div>
+</main>
+
+<!-- ============ PAGE: CAREERS ============ -->
+<main id="page-careers" class="page">
+  <div class="pagehead">
+    <div class="wrap">
+      <div class="crumbs"><a data-nav="home">Главная</a> <span>/</span> Вакансии</div>
+      <h1>Работа на производстве ИЗОБОНД</h1>
+      <p class="ph-lead">Растущее производство в Подольске. Ищем людей в команду — от цеха до отдела продаж.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding:44px 0">
+    <div class="cols-3" style="margin-bottom:30px">
+      <div class="card"><div class="mono" style="color:var(--burg);font-size:12px">ПРОИЗВОДСТВО</div><h4 style="margin:8px 0">Оператор линии</h4><p class="muted" style="font-size:14px">Подольск · полная занятость. <span class="mono" style="font-size:11px">(вакансии наполнит клиент)</span></p><a class="lnk" style="font-weight:650;color:var(--burg);font-size:14px" href="#" onclick="proto(event,'Открылась бы вакансия и форма отклика')">Откликнуться →</a></div>
+      <div class="card"><div class="mono" style="color:var(--burg);font-size:12px">ПРОДАЖИ</div><h4 style="margin:8px 0">Менеджер по работе с дилерами</h4><p class="muted" style="font-size:14px">Офис / удалённо. Опыт в стройматериалах — плюс.</p><a class="lnk" style="font-weight:650;color:var(--burg);font-size:14px" href="#" onclick="proto(event,'Открылась бы вакансия и форма отклика')">Откликнуться →</a></div>
+      <div class="card"><div class="mono" style="color:var(--burg);font-size:12px">СКЛАД</div><h4 style="margin:8px 0">Кладовщик-комплектовщик</h4><p class="muted" style="font-size:14px">Подольск · сменный график.</p><a class="lnk" style="font-weight:650;color:var(--burg);font-size:14px" href="#" onclick="proto(event,'Открылась бы вакансия и форма отклика')">Откликнуться →</a></div>
+    </div>
+    <div class="card" style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center">
+      <div><h4 style="margin-bottom:6px">Не нашли подходящую вакансию?</h4><p class="muted" style="font-size:14px">Отправьте резюме — свяжемся, когда появится подходящая позиция.</p></div>
+      <a class="btn btn-primary" href="#" onclick="proto(event,'Открылась бы форма отправки резюме')">Отправить резюме →</a>
+    </div>
+  </div>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <div class="flogo"><span class="mark">ИЗО<b>БОНД</b></span></div>
+        <p class="desc">Российский производитель рулонных изоляционных материалов. ТМ «Изобонд» — ООО ТД «Ван Маркет». Гидро-, паро-, ветроизоляция, геотекстиль, укрывные материалы.</p>
+        <div class="social">
+          <a href="#" title="Дзен">Дзен</a>
+          <a href="#" title="ВКонтакте">ВК</a>
+          <a href="#" title="Telegram">TG</a>
+          <a href="#" title="YouTube">YT</a>
+        </div>
+      </div>
+      <div>
+        <h5>Продукция</h5>
+        <a data-nav="catalog">Гидроизоляция</a><a data-nav="catalog">Пароизоляция</a><a data-nav="catalog">Мембраны</a><a data-nav="catalog">Геотекстиль</a><a data-nav="catalog">Укрывной спанбонд</a><a data-nav="catalog">Фольгированная (баня)</a>
+      </div>
+      <div>
+        <h5>Компания</h5>
+        <a data-nav="about">О компании</a><a data-nav="apply">Применение</a><a data-nav="knowledge">Полезное</a><a data-nav="news">Новости и акции</a><a data-nav="delivery">Доставка и оплата</a><a data-nav="careers">Вакансии</a>
+      </div>
+      <div>
+        <h5>Контакты</h5>
+        <a href="tel:+74951343566">+7 (495) 134-35-66</a>
+        <a href="mailto:info@van-market.com">info@van-market.com</a>
+        <a data-nav="contacts">142116, г. Подольск, МО</a>
+        <a data-nav="contacts">Все контакты и реквизиты</a>
+        <a data-nav="dealer" style="color:var(--burg-bright);font-weight:650">Стать дилером →</a>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>© 2007–2026 ООО ТД «Ван Маркет». Все права защищены.</span>
+      <span>Прототип нового сайта · Addu · 2026</span>
+    </div>
+  </div>
+</footer>
+
+<div class="proto" title="Это дизайн-прототип, а не рабочий сайт">◆ прототип</div>
+<div class="toast" id="toast"><span class="ok">✓</span><span id="toastMsg"></span></div>
+
+<script>
+(function(){
+  "use strict";
+  var root=document.documentElement;
+
+  /* theme toggle */
+  document.getElementById('themeBtn').addEventListener('click',function(){
+    var cur=root.getAttribute('data-theme');
+    if(!cur){cur=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';}
+    root.setAttribute('data-theme',cur==='dark'?'light':'dark');
+  });
+
+  /* mobile menu (simple anchor scroll — reveal hidden nav) */
+  document.getElementById('burger').addEventListener('click',function(){
+    var m=document.querySelector('nav.menu');
+    var open=m.style.display==='flex';
+    m.style.display=open?'':'flex';
+    if(!open){m.style.position='absolute';m.style.top='104px';m.style.left='0';m.style.right='0';m.style.flexDirection='column';m.style.background='var(--bg)';m.style.padding='16px 24px';m.style.borderBottom='1px solid var(--line)';m.style.gap='4px';}
+  });
+
+  /* toast for prototype actions */
+  var toast=document.getElementById('toast'),tm=document.getElementById('toastMsg'),tt;
+  window.proto=function(e,msg){ if(e){e.preventDefault();} tm.textContent=msg; toast.classList.add('show'); clearTimeout(tt); tt=setTimeout(function(){toast.classList.remove('show');},3200); };
+
+  /* ---- material selector ---- */
+  var MAT={
+    roof:{tag:'Скатная кровля',name:'Изобонд AS — супердиффузионная мембрана',why:'Укладывается прямо на утеплитель под кровлей. Выпускает пар из утеплителя наружу, но не пускает внутрь дождь, снег и ветер — без вентзазора сверху.',specs:['паропроницаемость <b>1000+ г/м²</b>','водоупор <b>W1</b>','монтаж <b>на утеплитель</b>'],art:'IZB-AS'},
+    wall:{tag:'Каркасная стена',name:'Изобонд A — ветро-влагозащита',why:'Наружный слой каркасной стены: защищает утеплитель от продувания и влаги, оставляя стене возможность «дышать». Разметка нахлёста ускоряет монтаж.',specs:['ветрозащита','паропроницаемая','<b>разметка</b> на полотне'],art:'IZB-A'},
+    facade:{tag:'Вентилируемый фасад',name:'Изобонд AM / AS — фасадная мембрана',why:'Под облицовкой вентфасада: держит ветер и атмосферную влагу, выпускает пар. Устойчива к УФ на время монтажа.',specs:['для <b>вентфасада</b>','УФ-стаб.','высокая паропроницаемость'],art:'IZB-AM'},
+    floor:{tag:'Пол и перекрытие',name:'Изобонд B — пароизоляция',why:'Со стороны помещения: не пускает тёплый влажный воздух в перекрытие, защищает утеплитель от намокания и конденсата.',specs:['паробарьер <b>≈0</b>','2 рабочих слоя','высокая прочность'],art:'IZB-B'},
+    bath:{tag:'Баня и сауна',name:'Изобонд FB — фольгированная пароизоляция',why:'Отражающий слой возвращает тепло внутрь парной и работает как пароизоляция при высокой температуре. Быстрее прогрев, экономия на топливе.',specs:['<b>отражает тепло</b>','до <b>+120 °C</b>','фольгированная'],art:'IZB-FB'},
+    garden:{tag:'Сад и огород',name:'Изобонд — укрывной спанбонд',why:'Пропускает свет, воздух и влагу, создаёт микроклимат: защищает растения от заморозков, солнца и сорняков. Белый — укрытие, чёрный — мульчирование.',specs:['плотность <b>17–60 г/м²</b>','бел./чёрн.','УФ-стаб.'],art:'IZB-SB'},
+    geo:{tag:'Грунт и дренаж',name:'Изобонд — геотекстиль',why:'Разделяет слои грунта, фильтрует воду и укрепляет основание дорожек, дренажа и склонов. Не даёт смешиваться щебню с грунтом.',specs:['плотность <b>100–300 г/м²</b>','дренаж','высокая прочность'],art:'IZB-GT'}
+  };
+  var nodes=document.getElementById('nodes'),selResult=document.getElementById('selResult');
+  function renderSel(key){
+    var m=MAT[key];
+    selResult.innerHTML='<div class="rtag">'+m.tag+' · рекомендуем</div>'+
+      '<h3>'+m.name+'</h3>'+
+      '<p class="why">'+m.why+'</p>'+
+      '<div class="rspecs">'+m.specs.map(function(s){return '<span class="pill">'+s+'</span>';}).join('')+'</div>'+
+      '<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary btn-sm" href="#" data-nav="calc">Рассчитать количество</a><a class="btn btn-ghost btn-sm" href="#" data-nav="catalog">Смотреть в каталоге</a></div>';
+  }
+  nodes.addEventListener('click',function(e){
+    var b=e.target.closest('.node'); if(!b)return;
+    nodes.querySelectorAll('.node').forEach(function(n){n.setAttribute('aria-selected','false');});
+    b.setAttribute('aria-selected','true');
+    renderSel(b.dataset.key);
+  });
+  renderSel('roof');
+
+  /* ---- catalog ---- */
+  var CAT=[
+    {t:'Гидроизоляционные плёнки',d:'Защита утеплителя и конструкций от дождя, снега и ветра — без потери пара.',s:'кровля · фасад',ic:'💧'},
+    {t:'Пароизоляция',d:'Барьер для влажного воздуха из помещения. Защищает утеплитель от конденсата.',s:'стены · пол · потолок',ic:'🛡️'},
+    {t:'Ветрозащитные мембраны',d:'Супердиффузионные мембраны: держат ветер, выпускают пар.',s:'вентфасад · кровля',ic:'🌬️'},
+    {t:'Геотекстиль',d:'Разделение слоёв грунта, дренаж, укрепление оснований и склонов.',s:'дороги · ландшафт',ic:'🛣️'},
+    {t:'Укрывной спанбонд',d:'Защита растений от заморозков и сорняков, парниковый эффект.',s:'сад · огород',ic:'🌱'},
+    {t:'Фольгированная (баня)',d:'Отражает тепло внутрь парной, работает при высокой температуре.',s:'баня · сауна',ic:'🔥'},
+    {t:'Ленты и комплектующие',d:'Соединительные ленты, крепёж и монтажные комплекты к плёнкам.',s:'монтаж',ic:'🧰'}
+  ];
+  document.getElementById('catGrid').innerHTML=CAT.map(function(c){
+    return '<div class="card use-card"><div style="font-size:26px">'+c.ic+'</div>'+
+      '<h4 style="margin-top:6px">'+c.t+'</h4>'+
+      '<p class="muted" style="font-size:14px">'+c.d+'</p>'+
+      '<div class="mono" style="font-size:11.5px;color:var(--ink-faint);letter-spacing:.05em">'+c.s+'</div>'+
+      '<a class="lnk" href="#" data-nav="catalog">Смотреть каталог →</a></div>';
+  }).join('');
+
+  /* ---- calculator ---- */
+  var cType=document.getElementById('cType'),cArea=document.getElementById('cArea'),cReserve=document.getElementById('cReserve');
+  function calc(){
+    var roll=parseFloat(cType.value);
+    var nap=parseFloat(cType.selectedOptions[0].dataset.nap); /* overlap loss */
+    var area=parseFloat(cArea.value)||0;
+    var res=parseFloat(cReserve.value);
+    var eff=area/(1-nap);          /* add overlap */
+    var tot=eff*(1+res);           /* add reserve */
+    var rolls=Math.max(1,Math.ceil(tot/roll));
+    document.getElementById('cRolls').textContent=rolls;
+    document.getElementById('cEff').textContent=eff.toFixed(1)+' м²';
+    document.getElementById('cTot').textContent=tot.toFixed(1)+' м²';
+    document.getElementById('cRoll').textContent=roll.toFixed(0)+' м²';
+  }
+  [cType,cArea,cReserve].forEach(function(el){el.addEventListener('input',calc);});
+  calc();
+
+  /* ---- where-to-buy tabs ---- */
+  var buyTabs=document.getElementById('buyTabs');
+  buyTabs.addEventListener('click',function(e){
+    var b=e.target.closest('.tab'); if(!b)return;
+    buyTabs.querySelectorAll('.tab').forEach(function(t){t.setAttribute('aria-selected','false');});
+    b.setAttribute('aria-selected','true');
+    document.querySelectorAll('#buy .tabpane').forEach(function(p){p.classList.toggle('on',p.dataset.p===b.dataset.t);});
+  });
+
+  /* ---- letter decoder ---- */
+  var DEC={
+    A:{n:'Изобонд A — ветро-влагозащита',d:'Наружная защита утеплителя в стенах и на кровле с вентзазором. Пропускает пар, держит ветер и влагу.'},
+    AS:{n:'Изобонд AS — супердиффузионная мембрана',d:'Высокая паропроницаемость — можно укладывать прямо на утеплитель, без верхнего вентзазора. Для скатных кровель.'},
+    B:{n:'Изобонд B — пароизоляция',d:'Двухслойная плёнка со стороны помещения. Не пускает влажный воздух в утеплитель — защита от конденсата.'},
+    C:{n:'Изобонд C — усиленная пароизоляция',d:'Более плотная и прочная пароизоляция для нагруженных узлов: полы по грунту, цокольные перекрытия.'},
+    D:{n:'Изобонд D — универсальная плёнка',d:'Прочная гидро-пароизоляция, выдерживает вес человека при монтаже. Подходит для неутеплённых кровель.'},
+    FB:{n:'Изобонд FB — фольгированная',d:'Отражающий фольгированный слой возвращает тепло внутрь. Для бань, саун и парных — до высоких температур.'},
+    RS:{n:'Изобонд RS — армированная',d:'Армирующая сетка внутри плёнки даёт повышенную прочность на разрыв для тяжёлых условий и больших пролётов.'}
+  };
+  var decoder=document.getElementById('decoder'),decodeOut=document.getElementById('decodeOut');
+  function decode(l){var x=DEC[l];decodeOut.innerHTML='<div class="dl">'+x.n+'</div><p class="muted" style="font-size:14.5px;margin-top:8px">'+x.d+'</p>';}
+  decoder.addEventListener('click',function(e){
+    var b=e.target.closest('.letter'); if(!b)return;
+    decoder.querySelectorAll('.letter').forEach(function(n){n.setAttribute('aria-selected','false');});
+    b.setAttribute('aria-selected','true'); decode(b.dataset.l);
+  });
+  decode('A');
+
+  /* ================= ROUTER ================= */
+  var pages={home:'page-home',catalog:'page-catalog',product:'page-product',select:'page-select',calc:'page-calc',apply:'page-apply',buy:'page-buy',knowledge:'page-knowledge',delivery:'page-delivery',news:'page-news',contacts:'page-contacts',careers:'page-careers',dealer:'page-dealer',about:'page-about'};
+  function go(name,anchor,prod){
+    name=pages[name]?name:'home';
+    Object.keys(pages).forEach(function(k){document.getElementById(pages[k]).classList.toggle('on',k===name);});
+    // update active nav
+    document.querySelectorAll('nav.menu a').forEach(function(a){a.style.color='';});
+    if(prod) loadProduct(prod);
+    if(anchor){
+      var el=document.getElementById(anchor);
+      if(el){ setTimeout(function(){el.scrollIntoView({behavior:'smooth',block:'start'});},60); return; }
+    }
+    window.scrollTo({top:0,behavior:'auto'});
+  }
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-nav]'); if(!t)return;
+    e.preventDefault();
+    go(t.dataset.nav,t.dataset.anchor,t.dataset.prod);
+    // close mobile menu if open
+    var m=document.querySelector('nav.menu'); if(m&&m.style.display==='flex'){m.style.display='';}
+  });
+
+  /* ================= PRODUCTS DATA ================= */
+  var PRODUCTS=[
+    {id:'A-PREM',art:'IZB-A-PREM',name:'Изобонд A Premium',type:'Мембрана',cat:'мембрана',use:['roof','wall','facade'],price:347,stock:1,desc:'Трёхслойная супердиффузионная мембрана с разметкой нахлёста. Замена Tyvek/Delta.'},
+    {id:'A',art:'IZB-A',name:'Изобонд A',type:'Гидроизоляция',cat:'гидро·ветро',use:['roof','wall','facade'],price:290,stock:1,desc:'Ветро-влагозащита для стен и кровли с вентзазором.'},
+    {id:'AS',art:'IZB-AS',name:'Изобонд AS',type:'Мембрана',cat:'мембрана',use:['roof','facade'],price:410,stock:1,desc:'Супердиффузионная мембрана — укладка прямо на утеплитель.'},
+    {id:'AM',art:'IZB-AM',name:'Изобонд AM',type:'Мембрана',cat:'мембрана',use:['facade','wall'],price:395,stock:1,desc:'Фасадная ветро-влагозащитная мембрана для вентфасадов.'},
+    {id:'B',art:'IZB-B',name:'Изобонд B',type:'Пароизоляция',cat:'пароизоляция',use:['floor','wall'],price:245,stock:1,desc:'Двухслойная пароизоляция со стороны помещения.'},
+    {id:'C',art:'IZB-C',name:'Изобонд C',type:'Пароизоляция',cat:'пароизоляция',use:['floor'],price:270,stock:1,desc:'Усиленная пароизоляция для нагруженных перекрытий.'},
+    {id:'D',art:'IZB-D',name:'Изобонд D',type:'Гидроизоляция',cat:'гидро·паро',use:['roof','floor'],price:255,stock:1,desc:'Прочная универсальная гидро-пароизоляция, держит вес.'},
+    {id:'FB',art:'IZB-FB',name:'Изобонд FB',type:'Фольга',cat:'фольга',use:['bath'],price:520,stock:1,desc:'Фольгированная пароизоляция для бань и саун — отражает тепло.'},
+    {id:'RS',art:'IZB-RS',name:'Изобонд RS',type:'Гидроизоляция',cat:'армированная',use:['roof','floor'],price:310,stock:0,desc:'Армированная плёнка повышенной прочности.'},
+    {id:'GT',art:'IZB-GT',name:'Изобонд Геотекстиль',type:'Геотекстиль',cat:'геотекстиль',use:['geo'],price:33,stock:1,desc:'Геотекстиль для дренажа, дорожек и укрепления грунта.'},
+    {id:'SB-W',art:'IZB-SB-W',name:'Изобонд Спанбонд белый',type:'Спанбонд',cat:'спанбонд',use:['garden'],price:180,stock:1,desc:'Укрывной белый спанбонд — защита от заморозков и солнца.'},
+    {id:'SB-B',art:'IZB-SB-B',name:'Изобонд Спанбонд чёрный',type:'Спанбонд',cat:'спанбонд',use:['garden'],price:210,stock:1,desc:'Чёрный мульчирующий спанбонд — против сорняков.'}
+  ];
+  function pcardHTML(p){
+    return '<button class="pcard" data-nav="product" data-prod="'+p.id+'">'+
+      '<div class="pv"><span class="cat">'+p.type+'</span></div>'+
+      '<div class="pb"><div class="art">ART. '+p.art+'</div><div class="pn">'+p.name+'</div>'+
+      '<div class="pd">'+p.desc+'</div>'+
+      '<div class="pf"><span class="pprice">'+p.price+' ₽ <small>от</small></span>'+
+      (p.stock?'<span class="pstk">● в наличии</span>':'<span class="pstk" style="color:var(--warn)">под заказ</span>')+
+      '</div></div></button>';
+  }
+  /* catalog render + filter */
+  var catalogGrid=document.getElementById('catalogGrid'),catCount=document.getElementById('catCount');
+  function activeFilters(){
+    var f={use:[],type:[],stock:[]};
+    document.querySelectorAll('.f:checked').forEach(function(c){f[c.dataset.f].push(c.value);});
+    return f;
+  }
+  function renderCatalog(){
+    var f=activeFilters();
+    var list=PRODUCTS.filter(function(p){
+      if(f.use.length && !f.use.some(function(u){return p.use.indexOf(u)>-1;})) return false;
+      if(f.type.length && f.type.indexOf(p.type)<0) return false;
+      if(f.stock.length && !p.stock) return false;
+      return true;
+    });
+    catCount.textContent='Найдено: '+list.length+' из '+PRODUCTS.length;
+    catalogGrid.innerHTML=list.length?list.map(pcardHTML).join(''):'<p class="muted">Ничего не найдено — сбросьте фильтры.</p>';
+  }
+  document.querySelectorAll('.f').forEach(function(c){c.addEventListener('change',renderCatalog);});
+  document.getElementById('fClear').addEventListener('click',function(){document.querySelectorAll('.f:checked').forEach(function(c){c.checked=false;});renderCatalog();});
+  renderCatalog();
+
+  /* apply page render (reuse MAT + link to product) */
+  var APPLY_PROD={roof:'AS',wall:'A',facade:'AM',floor:'B',bath:'FB',garden:'SB-W',geo:'GT'};
+  var applyGrid=document.getElementById('applyGrid');
+  if(applyGrid){
+    applyGrid.innerHTML=Object.keys(MAT).map(function(k){
+      var m=MAT[k],pid=APPLY_PROD[k];
+      return '<div class="card"><div class="lab" style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--burg)">'+m.tag+'</div>'+
+        '<h4 style="font-size:20px;margin:10px 0 8px">'+m.name+'</h4>'+
+        '<p class="muted" style="font-size:14.5px">'+m.why+'</p>'+
+        '<div class="rspecs" style="margin:14px 0">'+m.specs.map(function(s){return '<span class="pill">'+s+'</span>';}).join('')+'</div>'+
+        '<div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-primary btn-sm" href="#" data-nav="product" data-prod="'+pid+'">К материалу →</a><a class="btn btn-ghost btn-sm" href="#" data-nav="calc">Посчитать</a></div></div>';
+    }).join('');
+  }
+
+  /* product page loader */
+  function loadProduct(id){
+    var p=PRODUCTS.filter(function(x){return x.id===id;})[0]||PRODUCTS[0];
+    document.getElementById('prodCrumb').textContent=p.name;
+    document.getElementById('prodName').textContent=p.name;
+    document.getElementById('prodArt').textContent='ART. '+p.art+' · '+p.type;
+    document.getElementById('prodPrice').textContent=p.price+' ₽';
+    document.getElementById('prodDesc').textContent=p.desc+(p.id==='A-PREM'?' Полноценная замена ушедшим Tyvek и Delta — с российского склада и с гарантией 50 лет.':'');
+    document.getElementById('prodTag').textContent=(p.id==='A-PREM'?'разметка нахлёста на полотне':p.type);
+    // related = same first-use others
+    var rel=PRODUCTS.filter(function(x){return x.id!==p.id && x.use.some(function(u){return p.use.indexOf(u)>-1;});}).slice(0,3);
+    document.getElementById('prodRelated').innerHTML=rel.map(pcardHTML).join('');
+  }
+
+  /* FAQ accordion */
+  document.querySelectorAll('.faqq').forEach(function(q){
+    q.addEventListener('click',function(){
+      var it=q.parentElement, open=it.classList.contains('open')||it.getAttribute('data-open')==='1';
+      it.classList.toggle('open',!open); it.removeAttribute('data-open');
+      q.querySelector('.pm').textContent=!open?'–':'+';
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
