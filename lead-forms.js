@@ -100,7 +100,7 @@
     var price = kind === 'price';
     var html = price ? field('email', 'E-mail', true, 'email', 'you@company.ru', true, 'email') : '';
     html += field('name', 'Имя', !price, 'text', 'Как к вам обращаться', false, 'given-name');
-    if (!price) html += field('phone', 'Телефон', true, 'tel', '+7 (999) 123-45-67', false, 'tel');
+    html += field('phone', 'Телефон', true, 'tel', '+7 (999) 123-45-67', false, 'tel');
     if (!price) html += field('email', 'E-mail', false, 'email', 'you@company.ru', false, 'email');
     html += field('company', 'Компания', false, 'text', 'Название компании', false, 'organization');
     html += field('region', price ? 'Город / регион' : 'Город / регион поставки', !price, 'text', 'Например, Москва', true, 'address-level2');
