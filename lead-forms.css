@@ -1,0 +1,78 @@
+/* Shared enquiry dialogs. Colours and typography inherit the prototype theme. */
+html:has(.lead-dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }
+.lead-dialog {
+  width: min(620px, calc(100% - 40px)); max-height: calc(100dvh - 48px);
+  margin: auto; padding: 0; border: 1px solid var(--line-strong);
+  border-radius: 12px; background: var(--bg); color: var(--ink);
+  box-shadow: 0 24px 90px #0004; overflow: auto; overscroll-behavior: contain;
+  font: 15px/1.5 var(--sans); scrollbar-gutter: stable;
+}
+.lead-dialog::backdrop { background: #160d1099; backdrop-filter: blur(4px); }
+.lead-dialog *, .lead-dialog *::before, .lead-dialog *::after { box-sizing: border-box; }
+.lead-dialog [hidden] { display: none !important; }
+.lead-dialog .lead-inner { padding: 32px; }
+.lead-dialog .lead-close {
+  position: sticky; top: 12px; float: right; margin: 12px 12px -48px 0; z-index: 2;
+  width: 36px; height: 36px; border: 1px solid var(--line); border-radius: 50%;
+  background: var(--bg); color: var(--ink-soft); font: 24px/1 var(--sans); cursor: pointer;
+}
+.lead-dialog .lead-close:hover { border-color: var(--burg); color: var(--burg); }
+.lead-dialog .lead-eyebrow { color: var(--burg); font: 11px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; margin: 0 32px 12px 0; }
+.lead-dialog h2 { margin: 0 20px 10px 0; font-size: 30px; line-height: 1.12; letter-spacing: -.025em; }
+.lead-dialog .lead-intro { color: var(--ink-soft); margin-bottom: 22px; max-width: 49ch; }
+.lead-dialog .lead-required { color: var(--ink-soft); font-size: 12px; margin: 0 0 14px; }
+.lead-dialog .lead-context { padding: 18px; margin-bottom: 22px; border: 1px solid var(--line); border-left: 3px solid var(--burg); border-radius: var(--r); background: var(--surface); }
+.lead-dialog .lead-context-label { color: var(--burg); font: 10.5px/1.4 var(--mono); letter-spacing: .09em; text-transform: uppercase; margin-bottom: 8px; }
+.lead-dialog .lead-product { font-size: 18px; font-weight: 700; line-height: 1.25; margin-bottom: 6px; }
+.lead-dialog .lead-product-detail { color: var(--ink-soft); font-size: 12px; }
+.lead-dialog .lead-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; margin-top: 14px; }
+.lead-dialog .lead-summary dt { color: var(--ink-soft); font-size: 11.5px; }
+.lead-dialog .lead-summary dd { margin: 2px 0 0; font: 13px/1.5 var(--mono); }
+.lead-dialog .lead-summary .lead-total { color: var(--burg); font-weight: 700; font-size: 18px; }
+.lead-dialog .lead-link { padding: 0; border: 0; background: none; color: var(--burg); text-decoration: underline; text-underline-offset: 3px; font: inherit; cursor: pointer; }
+.lead-dialog .lead-edit { margin-top: 14px; font-size: 12px; }
+.lead-dialog .lead-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.lead-dialog .lead-field { min-width: 0; }
+.lead-dialog .lead-wide { grid-column: 1 / -1; }
+.lead-dialog .lead-field > label { display: block; margin-bottom: 6px; font-size: 12.5px; font-weight: 600; }
+.lead-dialog .lead-field input, .lead-dialog .lead-field select, .lead-dialog .lead-field textarea {
+  display: block; width: 100%; min-height: 46px; padding: 11px 12px; border: 1px solid var(--line-strong);
+  border-radius: var(--r); background: var(--bg); color: var(--ink); font: 15px/1.4 var(--sans);
+}
+.lead-dialog input::placeholder, .lead-dialog textarea::placeholder { color: var(--ink-faint); }
+.lead-dialog textarea { resize: vertical; min-height: 76px; max-height: 180px; }
+.lead-dialog .lead-volume { display: grid; grid-template-columns: minmax(0, 1fr) 110px; gap: 10px; }
+.lead-dialog .lead-help { color: var(--ink-soft); font-size: 11.5px; margin-top: 6px; }
+.lead-dialog .lead-error { color: var(--burg); font-size: 12px; margin-top: 5px; }
+.lead-dialog [aria-invalid="true"] { border-color: var(--burg) !important; }
+.lead-dialog .lead-consent { display: flex; align-items: flex-start; gap: 10px; margin-top: 20px; color: var(--ink-soft); font-size: 12px; }
+.lead-dialog .lead-consent input { flex: 0 0 18px; width: 18px; height: 18px; margin: 1px 0 0; accent-color: var(--burg); }
+.lead-dialog .lead-policy { font-size: 11.5px; margin: 8px 0 0 28px; }
+.lead-dialog .lead-submit { width: 100%; justify-content: center; margin-top: 20px; min-height: 48px; line-height: 1.35; text-align: center; }
+.lead-dialog button:disabled { cursor: wait; opacity: .65; }
+.lead-dialog .lead-note { padding-top: 12px; text-align: center; font-size: 11px; color: var(--ink-soft); }
+.lead-dialog .lead-failure { padding: 14px; margin-top: 16px; background: var(--burg-tint); border: 1px solid var(--burg); border-radius: var(--r); font-size: 13px; }
+.lead-dialog .lead-success { padding: 22px 0 8px; text-align: center; }
+.lead-dialog .lead-success h2 { margin: 20px 0 12px; }
+.lead-dialog .lead-success p { color: var(--ink-soft); }
+.lead-dialog .lead-success-icon { width: 64px; height: 64px; display: grid; place-items: center; margin: auto; background: var(--burg-tint); border: 1px solid var(--line); color: var(--burg); border-radius: 50%; font-size: 30px; }
+.lead-dialog .lead-preview { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 11px; color: var(--ink-soft); }
+.lead-dialog .lead-preview summary { cursor: pointer; }
+.lead-dialog .lead-preview-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
+.lead-dialog .lead-preview-actions button { font-size: 11px; }
+.lead-dialog :focus-visible { outline: 2px solid var(--burg); outline-offset: 3px; }
+.lead-dialog button { -webkit-tap-highlight-color: transparent; }
+@media (max-width: 560px) {
+  .lead-dialog { width: calc(100% - 20px); max-height: calc(100dvh - 20px); border-radius: 10px; }
+  .lead-dialog .lead-inner { padding: 26px 20px 22px; }
+  .lead-dialog h2 { font-size: 26px; }
+  .lead-dialog .lead-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .lead-dialog .lead-field input, .lead-dialog .lead-field select, .lead-dialog .lead-field textarea { font-size: 16px; }
+  .lead-dialog .lead-summary { column-gap: 12px; }
+  .lead-dialog .lead-context { padding: 14px; }
+  .lead-dialog .lead-close { top: 8px; margin: 8px 8px -44px 0; }
+  header.nav .wrap { gap: 10px; padding-inline: 16px; }
+  header.nav .right { gap: 7px; }
+  header.nav .right > [data-nav="dealer"] { display: none; }
+  header.nav [data-lead="price"] { padding: 9px 10px; font-size: 12px; }
+}

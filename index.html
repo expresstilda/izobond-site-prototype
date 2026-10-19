@@ -6,6 +6,7 @@
 <meta name="robots" content="noindex">
 <title>ИЗОБОНД — прототип нового сайта</title>
 <meta name="description" content="Прототип нового сайта производителя изоляционных материалов ИЗОБОНД.">
+<link rel="stylesheet" href="lead-forms.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%237C1D2B'/%3E%3Cpath d='M16 7l6 9-6 9-6-9z' fill='white'/%3E%3C/svg%3E">
 <style>*{margin:0;padding:0;box-sizing:border-box}</style>
 </head>
@@ -433,7 +434,7 @@
     </nav>
     <div class="right">
       <div class="phone">+7 (495) 134-35-66<small>пн–пт 9:00–18:00</small></div>
-      <a class="btn btn-ghost btn-sm" href="#" onclick="proto(event,'Прайс-лист (PDF) отправлен бы на скачивание')">Скачать прайс</a>
+      <button class="btn btn-ghost btn-sm" type="button" data-lead="price">Получить прайс</button>
       <a class="btn btn-primary btn-sm" href="#" data-nav="dealer">Стать дилером</a>
       <button class="theme-tgl" id="themeBtn" aria-label="Сменить тему" title="Светлая / тёмная тема">◐</button>
       <button class="burger" id="burger" aria-label="Меню">≡</button>
@@ -727,7 +728,7 @@
         <p class="muted" style="font-size:15.5px" id="prodDesc">Трёхслойная супердиффузионная мембрана с разметкой нахлёста на полотне. Полноценная замена ушедшим Tyvek и Delta — с российского склада и с гарантией срока службы 50 лет.</p>
         <div class="buyrow">
           <a class="btn btn-primary" href="#" data-nav="calc">Рассчитать на объект</a>
-          <a class="btn btn-ghost" href="#" onclick="proto(event,'Запрос оптовой цены ушёл бы менеджеру')">Запросить опт</a>
+          <button class="btn btn-ghost" type="button" data-lead="wholesale">Запросить опт</button>
           <a class="btn btn-ghost" href="#" data-nav="buy">Где купить</a>
         </div>
         <h3 style="font-size:18px;margin:26px 0 4px">Технические характеристики</h3>
@@ -943,7 +944,7 @@
           <div class="r"><span>С запасом на подрезку</span><span class="v tnum" id="cTot">—</span></div>
           <div class="r"><span>Площадь одного рулона</span><span class="v tnum" id="cRoll">—</span></div>
         </div>
-        <a class="btn btn-primary" style="width:100%;justify-content:center;margin-top:20px" href="#" onclick="proto(event,'Расчёт ушёл бы менеджеру — вам перезвонят с ценой')">Получить расчёт и цену →</a>
+        <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:20px" type="button" data-lead="calculation">Получить расчёт и цену →</button>
       </div>
     </div>
   </div>
@@ -1416,5 +1417,6 @@
 })();
 </script>
 
+<script src="lead-forms.js"></script>
 </body>
 </html>
